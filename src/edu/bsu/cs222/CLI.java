@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 
 public class CLI {
-    public void main(String args[]) {
+    public static void main(String args[]) {
 
     System.out.println("Library Management System 2.0");
     Scanner scanner = new Scanner(System.in);
