@@ -11,9 +11,4 @@ public class Book {
         this.ISBN=ISBN;
         this.callnumber=callnumber;
     }
-    public String getBook(String title, String author, String ISBN, String callnumber ){
-        if (this.title.equals(title) || this.author.equals(author) || this.ISBN.equals(ISBN) || this.callnumber.equals(callnumber))
-            return title+" "+author+" "+ISBN+" "+callnumber;
-        return "Book not found";
-    }
 }
