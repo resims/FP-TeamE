@@ -2,26 +2,34 @@ package edu.bsu.cs222;
 
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Scanner;
 
 public class CLI {
+    static Scanner s = new Scanner(System.in);
 
     public static void main(String[] args) {
+
+        // ResultSet rs = SQLBookProcessor.viewAllBooks();
+        String CallNumber = "A1334";
+        //SQLBookProcessor.parse(rs);
+        SQLBookProcessor.parse(SQLBookProcessor.viewAllBooks());
+        SQLBookProcessor.checkout(1, 2);
+        waitforit();
+        SQLBookProcessor.checkin(1, 2);
+
+        //SQLBookProcessor.parse(rs);
+        SQLBookProcessor.parse(SQLBookProcessor.viewAllTransactions());
+
+    }
+    public static void waitforit(){
         try {
-
-            ResultSet rs = SQLProcessor.veiwAllBooks();
-            String CallNumber="A1334";
-            SQLProcessor.parse(rs);
-            SQLProcessor.checkout("A1334");
-            rs = SQLProcessor.veiwAllBooks();
-            SQLProcessor.parse(rs);
-
-
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+    }
+
+    public static void login() {
+        String username = s.next();
     }
 }
