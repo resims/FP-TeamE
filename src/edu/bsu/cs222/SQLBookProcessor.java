@@ -8,21 +8,18 @@ import java.sql.SQLException;
 public class SQLBookProcessor extends SQLProcessor {
 
 
-    public static ResultSet viewAllBooks() {
-        ResultSet rs = generateQueryResultSet("SELECT rs1.Call_number, rs1.Title, rs1.Author, rs1.Available, rs2.Total FROM (SELECT Call_Number,Title,Author , COUNT(*) Available FROM books Where Available=1 GROUP BY Call_Number) as rs1 inner join (select Call_Number, COUNT(*) Total FROM books GROUP by Call_Number) as rs2 on rs1.Call_Number=rs2.Call_Number GROUP BY rs1.Call_number;");
-        return rs;
+    static ResultSet viewAllBooks() {
+        return generateQueryResultSet("SELECT rs1.Call_number, rs1.Title, rs1.Author, rs1.Available, rs2.Total FROM (SELECT Call_Number,Title,Author , COUNT(*) Available FROM books Where Available=1 GROUP BY Call_Number) as rs1 inner join (select Call_Number, COUNT(*) Total FROM books GROUP by Call_Number) as rs2 on rs1.Call_Number=rs2.Call_Number GROUP BY rs1.Call_number;");
     }
-    public static ResultSet viewAllTransactions() {
-        ResultSet rs = generateQueryResultSet("Select* from circulation;");
-        return rs;
+    static ResultSet viewAllTransactions() {
+        return generateQueryResultSet("Select* from circulation;");
     }
 
     public static ResultSet search(String type, String term) {
-        ResultSet rs = generateQueryResultSet("Select* from books where " + type + " like " + term + ";");
-        return rs;
+        return generateQueryResultSet("Select* from books where " + type + " like '%" + term + "%';");
     }
 
-    public static int getAvailable(int barcode_number) {
+    private static int getAvailable(int barcode_number) {
         int number = 0;
         //ResultSet rs =generateQueryResultSet("select Number_Available from books where barcode_number='" + barcode_number + "';");
         //SELECT Call_Number,Title,Author , COUNT(*) Available FROM books Where Call_Number="A1334" and Available=1,COUNT(*) Total FROM books Where Call_Number="A1334" GROUP BY Title ORDER BY COUNT(*) ASC
@@ -38,7 +35,7 @@ public class SQLBookProcessor extends SQLProcessor {
         return number;
     }
 
-    public static void checkout(int barcode_number,int UserID) {
+    static void checkout(int barcode_number, int UserID) {
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable != 0) {
             System.out.println("Checking out");
@@ -47,7 +44,7 @@ public class SQLBookProcessor extends SQLProcessor {
         }else{System.out.println("No Available copies to check out");}
     }
 
-    public static void checkin(int barcode_number,int UserID){
+    static void checkin(int barcode_number, int UserID){
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable !=1 ) {
             System.out.println("Checking in");

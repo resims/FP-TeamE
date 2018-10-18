@@ -17,6 +17,9 @@ public class CLI {
         waitforit();
         SQLBookProcessor.checkin(1, 2);
 
+        SQLBookProcessor.checkout(2, 3);
+        waitforit();
+        SQLBookProcessor.checkin(2, 3);
         //SQLBookProcessor.parse(rs);
         SQLBookProcessor.parse(SQLBookProcessor.viewAllTransactions());
 
