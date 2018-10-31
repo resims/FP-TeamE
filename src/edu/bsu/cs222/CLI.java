@@ -9,18 +9,15 @@ public class CLI {
 
     public static void main(String[] args) {
 
-        // ResultSet rs = SQLBookProcessor.viewAllBooks();
-        String CallNumber = "A1334";
-        //SQLBookProcessor.parse(rs);
+
         SQLBookProcessor.parse(SQLBookProcessor.viewAllBooks());
         SQLBookProcessor.checkout(1, 2);
         waitforit();
-        SQLBookProcessor.checkin(1, 2);
+        SQLBookProcessor.checkin(1);
 
         SQLBookProcessor.checkout(2, 3);
         waitforit();
-        SQLBookProcessor.checkin(2, 3);
-        //SQLBookProcessor.parse(rs);
+        SQLBookProcessor.checkin(2);
         SQLBookProcessor.parse(SQLBookProcessor.viewAllTransactions());
 
     }

@@ -9,7 +9,7 @@ public class SQLProcessor {
 
     static {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false&allowMultiQueries=true");
         } catch (SQLException e) {
             e.printStackTrace();
         }
