@@ -1,31 +1,4 @@
 package edu.bsu.cs222;
-/*
-
-
-
-
-
-
-
-
-
-
-
-DDDDD    OOOOO       NN   NN  OOOOO  TTTTTTT      RRRRRR  UU   UU NN   NN      TTTTTTT HH   HH IIIII  SSSSS      CCCCC  LL        AAA    SSSSS   SSSSS
-DD  DD  OO   OO      NNN  NN OO   OO   TTT        RR   RR UU   UU NNN  NN        TTT   HH   HH  III  SS         CC    C LL       AAAAA  SS      SS
-DD   DD OO   OO      NN N NN OO   OO   TTT        RRRRRR  UU   UU NN N NN        TTT   HHHHHHH  III   SSSSS     CC      LL      AA   AA  SSSSS   SSSSS
-DD   DD OO   OO      NN  NNN OO   OO   TTT        RR  RR  UU   UU NN  NNN        TTT   HH   HH  III       SS    CC    C LL      AAAAAAA      SS      SS
-DDDDDD   OOOO0       NN   NN  OOOO0    TTT        RR   RR  UUUUU  NN   NN        TTT   HH   HH IIIII  SSSSS      CCCCC  LLLLLLL AA   AA  SSSSS   SSSSS
-
-
-
-
-
-
-
-
-
- */
 
 import java.util.Scanner;
 
