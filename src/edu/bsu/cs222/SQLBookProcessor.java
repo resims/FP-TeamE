@@ -5,27 +5,27 @@ import java.sql.*;
 import java.sql.SQLException;
 
 
-public class SQLBookProcessor extends SQLProcessor {
+class SQLBookProcessor{
 
 
     static ResultSet viewAllBooks() {
-        return generateQueryResultSet(SQLGenerator.viewAllBooks());
+        return SQLProcessor.generateQueryResultSet(SQLGenerator.viewAllBooks());
     }
     static ResultSet viewAllTransactions() {
-        return generateQueryResultSet("Select* from circulation;");
+        return SQLProcessor.generateQueryResultSet("Select* from circulation;");
     }
 
-    public static ResultSet search(String type, String term) {
-        return generateQueryResultSet(SQLGenerator.search(type,term,0));
+    static ResultSet search(String type, String term) {
+        return advancedSearch(type,term,0);
     }
-    public static ResultSet advancedSearch(String type, String term,int qualifier) {
+    static ResultSet advancedSearch(String type, String term, int qualifier) {
         //qualifier is -1 for %term (ends with), 0 for %term% (contains), 1 for term% (starts with)
-        return generateQueryResultSet(SQLGenerator.search(type,term,qualifier));
+        return SQLProcessor.generateQueryResultSet(SQLGenerator.search(type,term,qualifier));
     }
 
     private static int getAvailable(int barcode_number) {
         int number = 0;
-        ResultSet rs=generateQueryResultSet(SQLGenerator.getAvailable(barcode_number));
+        ResultSet rs=SQLProcessor.generateQueryResultSet(SQLGenerator.getAvailable(barcode_number));
         try {
             if (rs.first()) {
                 number = rs.getInt(1);
@@ -39,7 +39,7 @@ public class SQLBookProcessor extends SQLProcessor {
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable != 0) {
             System.out.println("Checking out");
-        executeSQL(SQLGenerator.checkout(barcode_number,UserID));
+        SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number,UserID));
         }else{System.out.println("No Available copies to check out");}
     }
 
@@ -48,7 +48,7 @@ public class SQLBookProcessor extends SQLProcessor {
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable !=1 ) {
             System.out.println("Checking in");
-            executeSQL(SQLGenerator.checkin(barcode_number));
+            SQLProcessor.executeSQL(SQLGenerator.checkin(barcode_number));
         }else{System.out.println("No Available copies to check out");}
     }
 }
