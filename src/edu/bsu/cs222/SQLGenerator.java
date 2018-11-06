@@ -1,7 +1,7 @@
 package edu.bsu.cs222;
 
-public class SQLGenerator {
-    final static int days=14;
+class SQLGenerator {
+    private final static int days=14;
     static String checkout(int barcode_number, int UserID) {
         return ("update books set Available=0 where barcode_number='" + barcode_number + "'; INSERT INTO `circulation`(`user_id`, `book_id`, `due_date`) VALUES ("+UserID+",'"+barcode_number+"',DATE_ADD(CURRENT_TIMESTAMP, INTERVAL "+days+" DAY));");
     }
@@ -19,5 +19,15 @@ public class SQLGenerator {
         else if (qualifier==0) {term="%"+term+"%";}
         else {term=term+"%";}
         return "Select* from books where " + type + " like '" + term + "';";
+    }
+    static String getPassword(String username){
+        return "select Password from Users where Username="+username+";";
+    }
+    static String addUser(String username, String password, String type){
+        return "Insert into Users (Username,Password, Type) values ("+username+","+password+","+type+");";
+    }
+
+    static String getUserType(String username) {
+        return "select Type from users where username="+username+";";
     }
 }
