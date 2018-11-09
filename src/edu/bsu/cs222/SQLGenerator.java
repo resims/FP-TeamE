@@ -21,13 +21,13 @@ class SQLGenerator {
         return "Select* from books where " + type + " like '" + term + "';";
     }
     static String getPassword(String username){
-        return "select Password from Users where Username="+username+";";
+        return "select Password from Users where Username='"+username+"';";
     }
     static String addUser(String username, String password, String type){
         return "Insert into Users (Username,Password, Type) values ("+username+","+password+","+type+");";
     }
 
     static String getUserType(String username) {
-        return "select Type from users where username="+username+";";
+        return "select Type from users where username='"+username+"';";
     }
 }

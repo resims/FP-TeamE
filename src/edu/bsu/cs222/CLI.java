@@ -31,9 +31,9 @@ public class CLI {
         waitForIt();
         SQLBookProcessor.checkin(2);
         SQLProcessor.parse(SQLBookProcessor.viewAllTransactions());
-        SQLBookProcessor.search("H","Title");
-        System.out.println(SQLBookProcessor.search("T","Author"));
-        System.out.println(SQLProcessor.parseasList(SQLBookProcessor.advancedSearch("B","Author",-1)));
+        SQLBookProcessor.search("Title","H");
+        System.out.println(SQLBookProcessor.search("Author","T"));
+        System.out.println(SQLProcessor.parseasList(SQLBookProcessor.advancedSearch("Author","e",-1)));
 }
 
     private static void deanMode() {
