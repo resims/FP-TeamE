@@ -6,16 +6,36 @@ import java.security.NoSuchAlgorithmException;
 public class PasswordHash {
     public static final String SALT = "saltyText";
 
+    boolean isValid = false;
+    boolean authenticated = true;
+    boolean notAuthenticated = false;
+
     //allow user to input information on GUI
-    public void signup(String usernameInput, String passwordInput, String typeInput) {
+    public boolean userSignup(String usernameInput, String passwordInput, String typeInput) {
         String hashedPassword = createHashedPassword(passwordInput);
-        SQLUserProcessor.addUser(usernameInput,hashedPassword,"Patron");
+        isValid = SQLUserProcessor.addUser(usernameInput,hashedPassword,"Patron");
+        if (isValid == true) {
+            return authenticated;
+        }
+
+        else {
+            return notAuthenticated;
+        }
     }
 
     //allow user to input information on GUI
-    public void loginUser(String usernameInput, String passwordInput) {
+    public boolean userLogin (String usernameInput, String passwordInput) {
         String hashedPassword = createHashedPassword(passwordInput);
         SQLUserProcessor.login(usernameInput,hashedPassword);
+
+        isValid = SQLUserProcessor.login(usernameInput,hashedPassword);
+        if (isValid == true) {
+            return authenticated;
+        }
+
+        else {
+            return notAuthenticated;
+        }
     }
 
     public static String createHashedPassword(String password) {
