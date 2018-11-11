@@ -4,12 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLProcessor {
+class SQLProcessor {
     private static Connection conn;
 
     static {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false&allowMultiQueries=true");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,7 +54,29 @@ public class SQLProcessor {
             e.printStackTrace();
         }
     }
-    public static ArrayList parseasList(ResultSet resultSet) {
+    static String parseasString(ResultSet resultSet){
+        ResultSetMetaData metaData;
+        StringBuilder result= new StringBuilder();
+        try {
+            metaData = resultSet.getMetaData();
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                result.append(metaData.getColumnName(i)).append(", ");
+            }
+            result.append(";");
+            while (resultSet.next()) {
+                for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                    if (i > 1) result.append(",  ");
+                    String columnValue = resultSet.getString(i);
+                    result.append(columnValue);
+                }
+                result.append(";");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result.toString();
+    }
+    static ArrayList parseasList(ResultSet resultSet) {
         ResultSetMetaData metaData;
         ArrayList<List<String>> list=new ArrayList<>();
         try {
