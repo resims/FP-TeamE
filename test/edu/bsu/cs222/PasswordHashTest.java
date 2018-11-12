@@ -1,29 +1,19 @@
 package edu.bsu.cs222;
 
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class PasswordHashTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @Test
-    public void main() {
-    }
-
     @Test
     public void signup() {
+        Assert.assertEquals(PasswordHash.userSignup("adam", "isTestingThis", "Patron"), true);
     }
 
     @Test
     public void login() {
+        Assert.assertEquals(PasswordHash.userLogin("adam", "isTestingThis"), true);
     }
 
-    @Test
-    public void generateHash() {
-    }
+
 }
