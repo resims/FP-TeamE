@@ -466,9 +466,5 @@ public class GUI_Library extends Application {
 
         Text date = new Text("Date");               //should display date
         grid.add(date, 2, 0);
-
-        Scene scene = new Scene(grid, 600, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }*/
 }
