@@ -35,21 +35,21 @@ class SQLBookProcessor{
         }
         return number;
     }
-    static void checkout(int barcode_number, int UserID){
+    static boolean checkout(int barcode_number, int UserID){
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable != 0) {
-            System.out.println("Checking out");
-        SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number,UserID));
-        }else{System.out.println("No Available copies to check out");}
+            return true;
+        //SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number,UserID));
+        }else{return false;}
     }
 
 
-    static void checkin(int barcode_number){
+    static boolean checkin(int barcode_number){
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable !=1 ) {
-            System.out.println("Checking in");
-            SQLProcessor.executeSQL(SQLGenerator.checkin(barcode_number));
-        }else{System.out.println("No Available copies to check out");}
+            return true;
+            //SQLProcessor.executeSQL(SQLGenerator.checkin(barcode_number));
+        }else{return false;}
     }
 }
 
