@@ -128,7 +128,7 @@ public class GUI_Library extends Application {
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
-            Librarian_search_grid.add(results,1,4,40,100);
+            Librarian_search_grid.add(results,1,4,100,100);
         });
         Librarian_search_grid.add(Librarian_search_books,5,2);
 
@@ -164,6 +164,9 @@ public class GUI_Library extends Application {
 
         TextField book_to_be_checked_out = new TextField("Barcode of book");
         Librarian_check_out_grid.add(book_to_be_checked_out,1,1);
+
+        TextField user_id_checking_out = new TextField("User ID");
+        Librarian_check_out_grid.add(user_id_checking_out,2,1);
 
         Button Librarian_check_in = new Button("Check In");
         Librarian_check_in.setOnAction(e ->{
@@ -275,7 +278,7 @@ public class GUI_Library extends Application {
                 popup_Stage.show();
             }
         });
-        Librarian_check_out_grid.add(Librarian_check_out,2,1);
+        Librarian_check_out_grid.add(Librarian_check_out,3,1);
         Scene Librarian_check_out_scene = new Scene(Librarian_check_out_grid, 960, 600);
 
         //Patron scene ---------------------------------------------------------------------------------------------
