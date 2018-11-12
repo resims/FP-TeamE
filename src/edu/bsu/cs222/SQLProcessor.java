@@ -66,18 +66,19 @@ class SQLProcessor {
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 result.append(metaData.getColumnName(i)).append(", ");
             }
-            result.append(";");
+            result.append("\n");
             while (resultSet.next()) {
                 for (int i = 1; i <= metaData.getColumnCount(); i++) {
                     if (i > 1) result.append(",  ");
                     String columnValue = resultSet.getString(i);
                     result.append(columnValue);
                 }
-                result.append(";");
+                result.append("\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.print(result.toString());
         return result.toString();
     }
     static ArrayList parseasList(ResultSet resultSet) {

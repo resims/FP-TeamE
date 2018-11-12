@@ -70,16 +70,11 @@ public class GUI_Library extends Application {
 
         Button search_books = new Button("Search");
         search_books.setOnAction(e ->{
-            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.search(search_type.getSelectionModel().getSelectedItem(),term.getText()));
-            String text_string = "";
-            for(int i=0;i<list.size();i++){
-                text_string = text_string + "\n" + "\n" + list.get(i).toString();
-            }
-            //text_string.replaceAll(,"");
+            String text_string = SQLProcessor.parseasString(SQLBookProcessor.search(search_type.getSelectionModel().getSelectedItem(),term.getText()));
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
-            search_grid.add(results,1,4,40,100);
+            search_grid.add(results,1,4,100,100);
         });
         search_grid.add(search_books,5,2);
 
@@ -128,12 +123,8 @@ public class GUI_Library extends Application {
 
         Button Librarian_search_books = new Button("Search");
         Librarian_search_books.setOnAction(e ->{
-            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.search(search_type2.getSelectionModel().getSelectedItem(),term2.getText()));
-            String text_string = "";
-            for(int i=0;i<list.size();i++){
-                text_string = text_string + "\n" + "\n" + list.get(i).toString();
-            }
-            //text_string.replaceAll(,"");
+            String text_string = SQLProcessor.parseasString(SQLBookProcessor.search(search_type2.getSelectionModel().getSelectedItem(),term2.getText()));
+            System.out.print("text string="+text_string);
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
