@@ -24,7 +24,7 @@ class SQLGenerator {
         return "select Password from Users where Username='"+username+"';";
     }
     static String addUser(String username, String password, String type){
-        return "Insert into Users (Username,Password, Type) values ("+username+","+password+","+type+");";
+        return "Insert into Users (Username,Password, Type) values ('"+username+"','"+password+"','"+type+"');";
     }
 
     static String getUserType(String username) {

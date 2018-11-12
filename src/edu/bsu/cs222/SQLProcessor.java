@@ -9,7 +9,7 @@ class SQLProcessor {
 
     static {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false&allowMultiQueries=true");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/library?user=root&useSSL=false&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=EST");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -27,8 +27,12 @@ class SQLProcessor {
 
     static boolean executeSQL(String statement) {
         try {
-            return conn.createStatement().execute(statement);
-        } catch (SQLException e) {
+            conn.createStatement().execute(statement);
+            return true;
+        } catch(SQLIntegrityConstraintViolationException e){
+            System.out.println("cannot add user");
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

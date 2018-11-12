@@ -1,6 +1,7 @@
 package edu.bsu.cs222;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
 
 public class GUI_Library extends Application {
 
-    Scene login_scene;
+    PasswordHash UserInfo = new PasswordHash();
 
     @Override
     public void start(Stage PrimaryStage) {//throws Exception{
@@ -94,11 +96,101 @@ public class GUI_Library extends Application {
 
         Button Login = new Button("Login");
         Login.setPrefSize(200,25);
-        Login.setOnAction(e ->{PrimaryStage.setScene(patron_scene);});
+        Login.setOnAction(e ->{
+            Boolean check = UserInfo.userLogin(user.getText(),pass.getText());
+            if (check){
+                String type = SQLUserProcessor.getUserType(user.getText());
+                if (type == "Patron"){
+                    PrimaryStage.setScene(patron_scene);
+                }
+                if (type == "Librarian"){
+                    PrimaryStage.setScene(Librarian_scene);
+                }
+                if (type == "Dean"){
+                    PrimaryStage.setScene(Admin_scene);
+                }
+            }
+            else{
+
+                Stage popup_Stage = new Stage();
+                popup_Stage.setTitle("Warning");
+
+                GridPane popup_grid = new GridPane();
+
+                Text warning = new Text("Invalid Credentials, please try again.");
+                warning.setFont(Font.font(18));
+                popup_grid.add(warning,1,1);
+
+                Button close_warn = new Button("Close");
+                close_warn.setOnAction(e2 ->{popup_Stage.close();});
+                popup_grid.add(close_warn,1,3);
+                popup_grid.setHalignment(close_warn, HPos.CENTER);
+
+                Scene Popup_Scene = new Scene(popup_grid,300,100);
+                popup_Stage.setScene(Popup_Scene);
+                popup_Stage.show();
+            }
+        });
 
         Button SignUp = new Button("Sign up");
         SignUp.setPrefSize(200,25);
-        SignUp.setOnAction(e ->{PrimaryStage.setScene(Librarian_scene);});
+        SignUp.setOnAction(e ->{
+
+            Boolean check = UserInfo.userSignup(user.getText(),pass.getText(),"Patron");
+
+            if(check){
+                Stage popup_Stage = new Stage();
+                popup_Stage.setTitle("Pop-up");
+
+                GridPane popup_grid = new GridPane();
+
+                Text success = new Text("Sign up Successful!");
+                success.setFont(Font.font(18));
+                popup_grid.add(success,1,1);
+                popup_grid.setHalignment(success, HPos.CENTER);
+
+                Text success_2 = new Text("Please close this window and log in to continue");
+                success_2.setFont(Font.font(14));
+                popup_grid.add(success_2,1,2);
+                popup_grid.setHalignment(success_2, HPos.CENTER);
+
+                Button close_warn = new Button("Close");
+                close_warn.setOnAction(e2 ->{popup_Stage.close();});
+                popup_grid.add(close_warn,1,3);
+                popup_grid.setHalignment(close_warn, HPos.CENTER);
+
+                Scene popup_Scene = new Scene(popup_grid,300,100);
+                popup_Stage.setScene(popup_Scene);
+                popup_Stage.show();
+            }else{
+                Stage popup_Stage = new Stage();
+                popup_Stage.setTitle("Warning");
+
+                GridPane popup_grid = new GridPane();
+
+                Text warning = new Text("Unable to Sign Up.");
+                warning.setFont(Font.font(18));
+                popup_grid.add(warning,1,1);
+                popup_grid.setHalignment(warning, HPos.CENTER);
+
+
+                Text warning_2 = new Text("Please check spelling and character types used");
+                warning_2.setFont(Font.font(14));
+                popup_grid.add(warning_2,1,2);
+                popup_grid.setHalignment(warning_2, HPos.CENTER);
+
+                Button close = new Button("Close");
+                close.setOnAction(e2 ->{popup_Stage.close();});
+                popup_grid.add(close,1,3);
+                popup_grid.setHalignment(close, HPos.CENTER);
+
+                Scene Popup_Scene = new Scene(popup_grid,300,100);
+                popup_Stage.setScene(Popup_Scene);
+                popup_Stage.show();
+            }
+
+
+        });
 
         Button close = new Button("close");
         close.setPrefSize(200,25);
@@ -106,10 +198,11 @@ public class GUI_Library extends Application {
 
         Login_grid.add(username,1,1);
         Login_grid.add(password,1,2);
-        Login_grid.add(Login,2,1);
-        Login_grid.add(SignUp,2,2);
+        Login_grid.add(user,2,1);
+        Login_grid.add(pass,2,2);
+        Login_grid.add(Login,3,1);
+        Login_grid.add(SignUp,3,2);
         Login_grid.add(close,10,10);
-
 
         Scene login_scene = new Scene(Login_grid,800,500);
 

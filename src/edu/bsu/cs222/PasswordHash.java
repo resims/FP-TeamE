@@ -14,6 +14,7 @@ public class PasswordHash {
     public boolean userSignup(String usernameInput, String passwordInput, String typeInput) {
         String hashedPassword = createHashedPassword(passwordInput);
         isValid = SQLUserProcessor.addUser(usernameInput,hashedPassword,"Patron");
+
         if (isValid == true) {
             return authenticated;
         }
@@ -41,7 +42,7 @@ public class PasswordHash {
     public static String createHashedPassword(String password) {
         String saltedPassword = SALT + password;
         String hashedPassword = generateHash(saltedPassword);
-        
+
         return hashedPassword;
     }
     
