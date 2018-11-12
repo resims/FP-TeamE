@@ -6,28 +6,242 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class GUI_Library extends Application {
-    public Stage primaryStage;
-    private String username;
-    private String password;
 
-    public void GUI(String[] args) {
-        launch(args);
-    }
+    Scene login_scene;
 
     @Override
-    public void start(Stage primaryStage) {//throws Exception{
-        primaryStage.setTitle("Library Title Screen");
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setMinSize(800, 500);
-        grid.setVgap(5);
-        grid.setHgap(5);
-        grid.setStyle("-fx-background-color:  #800080;");
+    public void start(Stage PrimaryStage) {//throws Exception{
+        PrimaryStage.setTitle("Library Database");
 
+        //scene Patron
+
+        GridPane Patron_grid = new GridPane();
+        Patron_grid.setPadding(new Insets(10, 10, 10, 10));
+        Patron_grid.setMinSize(800, 500);
+        Patron_grid.setVgap(5);
+        Patron_grid.setHgap(5);
+        Patron_grid.setStyle("-fx-background-color:  #800080;");
+
+        Button search = new Button("Search Books");
+        Button reserve = new Button("Reserve books");
+        Button due_dates = new Button("Check current due dates");
+
+        search.setPrefSize(200,25);
+        reserve.setPrefSize(200,25);
+        due_dates.setPrefSize(200,25);
+
+        Patron_grid.add(search,1,1);
+        Patron_grid.add(reserve,1,2);
+        Patron_grid.add(due_dates,1,3);
+
+        Scene patron_scene = new Scene(Patron_grid,300,250);
+
+        //scene Librarian
+
+        Button Librarian_search = new Button("Search Books");
+        Button Librarian_reserve = new Button("Reserve books");
+        Button Linrarian_due_dates = new Button("Check current due dates");
+        Button check_in = new Button("Check in");
+        Button check_out = new Button("Check out");
+
+        VBox Librarian_layout = new VBox(20);
+        Librarian_layout.getChildren().addAll(Librarian_search,Librarian_reserve,Linrarian_due_dates,check_in,check_out);
+        Scene Librarian_scene = new Scene(Librarian_layout,300,250);
+
+        //scene Admin
+
+        Button Admin_search = new Button("Search Books");
+        Button Admin_reserve = new Button("Reserve books");
+        Button Admin_due_dates = new Button("Check current due dates");
+
+        Button Admin_check_in = new Button("Check in");
+        Button Admin_check_out = new Button("Check out");
+
+        Button Admin_Functions = new Button("Admin Functions");
+
+        VBox Admin_layout = new VBox(20);
+        Admin_layout.getChildren().addAll(Admin_search,Admin_reserve,Admin_due_dates,Admin_check_in,Admin_check_out,Admin_Functions);
+        Scene Admin_scene = new Scene(Admin_layout,300,250);
+
+        //scene Login
+
+        GridPane Login_grid = new GridPane();
+        Login_grid.setPadding(new Insets(10, 10, 10, 10));
+        Login_grid.setMinSize(800, 500);
+        Login_grid.setVgap(5);
+        Login_grid.setHgap(5);
+        Login_grid.setStyle("-fx-background-color:  #800080;");
+
+        Text username = new Text("Username:");
+        username.setFont(Font.font(30));
+        Text password = new Text("Password:");
+        password.setFont(Font.font(30));
+
+        TextField user = new TextField("Username");
+        user.setPrefSize(200,25);
+        TextField pass = new TextField("Password");
+        pass.setPrefSize(200,25);
+
+
+        Button Login = new Button("Login");
+        Login.setPrefSize(200,25);
+        Login.setOnAction(e ->{PrimaryStage.setScene(patron_scene);});
+
+        Button SignUp = new Button("Sign up");
+        SignUp.setPrefSize(200,25);
+        SignUp.setOnAction(e ->{PrimaryStage.setScene(Librarian_scene);});
+
+        Button close = new Button("close");
+        close.setPrefSize(200,25);
+        close.setOnAction(e ->{PrimaryStage.setScene(Admin_scene);});
+
+        Login_grid.add(username,1,1);
+        Login_grid.add(password,1,2);
+        Login_grid.add(Login,2,1);
+        Login_grid.add(SignUp,2,2);
+        Login_grid.add(close,10,10);
+
+
+        Scene login_scene = new Scene(Login_grid,800,500);
+
+        //---------------------------------------------------------------------------//
+
+        PrimaryStage.setScene(login_scene);
+        PrimaryStage.show();
+    }
+
+    public static void main(String[] args){launch(args);}
+
+        /*
+        LoginStage.setTitle("Library Database Login");
+        GridPane Login_Grid = new GridPane();
+        Login_Grid.setPadding(new Insets(10, 10, 10, 10));
+        Login_Grid.setMinSize(800, 500);
+        Login_Grid.setVgap(5);
+        Login_Grid.setHgap(5);
+        Login_Grid.setStyle("-fx-background-color:  #800080;");
+
+        PatronStage.setTitle("Library Patron Home Screen");
+        GridPane Patron_Grid = new GridPane();
+        Patron_Grid.setPadding(new Insets(10, 10, 10, 10));
+        Patron_Grid.setMinSize(800, 500);
+        Patron_Grid.setVgap(5);
+        Patron_Grid.setHgap(5);
+        Patron_Grid.setStyle("-fx-background-color:  #800080;");
+
+        LibrarianStage.setTitle("Librarian Home Screen");
+        GridPane Librarian_Grid = new GridPane();
+        Librarian_Grid.setPadding(new Insets(10, 10, 10, 10));
+        Librarian_Grid.setMinSize(800, 500);
+        Librarian_Grid.setVgap(5);
+        Librarian_Grid.setHgap(5);
+        Librarian_Grid.setStyle("-fx-background-color:  #800080;");
+
+        AdminStage.setTitle("Admin Home Screen");
+        GridPane Admin_Grid = new GridPane();
+        Admin_Grid.setPadding(new Insets(10, 10, 10, 10));
+        Admin_Grid.setMinSize(800, 500);
+        Admin_Grid.setVgap(5);
+        Admin_Grid.setHgap(5);
+        Admin_Grid.setStyle("-fx-background-color:  #800080;");
+    */
+
+        //-------------------------------------------------------//
+
+        //Login grid creation
+
+        //PasswordHash UserInfo = new PasswordHash();  //needed to instantiate PasswordHash to reference
+/*
+        Text username = new Text("Username:");
+        Login_Grid.add(username,1,2);
+        Text password = new Text("Password:");
+        Login_Grid.add(password,1,3);
+
+
+        TextField user = new TextField("Username");
+        Login_Grid.add(user, 2, 2);
+        TextField Pass = new TextField("Password");
+        Login_Grid.add(Pass, 2, 3);
+
+        Button Login = new Button("Login");
+
+        Login.setOnAction(e ->{
+            //Boolean check = UserInfo.userLogin(user.getText(),Pass.getText());
+            Boolean check = true;
+            String type = "";   //testing purposes for lines 85 and 86
+            if (check){
+                //String type = SQLUserProcessor.getUserType(user.getText());
+                if (type.toUpperCase() == "PATRON"){
+                    PatronStage.show();
+                    LoginStage.close();
+                }
+                if (type.toUpperCase() == "LIBRARIAN"){
+                    LibrarianStage.show();
+                    LoginStage.close();
+                }
+                if (type.toUpperCase() == "ADMIN"){
+                    AdminStage.show();
+                    LoginStage.close();
+                }
+            }
+            else{
+                Popup flag = new Popup();
+                flag.setX(300);
+                flag.setY(200);
+                flag.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
+                Stage PopupStage = new Stage();
+                TextField Popup = new TextField("Invalid Credentials, please try again.");
+                Button close = new Button();
+                close.setOnAction(e2 ->{
+                    PopupStage.close();
+                });
+                GridPane Popup_Grid = new GridPane();
+                Popup_Grid.add(Popup,1,1);
+                Popup_Grid.add(close,1,2);
+                Scene Popup_Scene = new Scene(Popup_Grid,400,300);
+                PopupStage.setScene(Popup_Scene);
+                PopupStage.show();
+
+            }
+
+
+        });
+
+        Button SignUp = new Button("Sign up");
+
+        SignUp.setOnAction(e ->{
+            //Boolean Authenticate = UserInfo.userSignup(user.getText(),Pass.getText(),"Patron");
+
+        });
+
+        Button close = new Button("close");
+
+        Login_Grid.add(Login,3,2);
+        Login_Grid.add(SignUp,3,3);
+        Login_Grid.add(close,7,7);
+        close.setOnAction(e ->{
+            LoginStage.close();
+        });
+
+*/
+        //End of Login Grid
+
+        //--------------------------------------------------------------//
+
+        //Scene scene = new Scene(grid, 600, 500);
+//        PrimaryStage.setScene(login_scene);
+//        PrimaryStage.show();
+//    }
+/*
         Button add_remove_book = new Button("Add/Remove book");
         Button check_reservation_dues = new Button("check Reservations / due dates");
         Button view_overdue = new Button("view Overdue Books");
@@ -256,5 +470,5 @@ public class GUI_Library extends Application {
         Scene scene = new Scene(grid, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
+    }*/
 }
