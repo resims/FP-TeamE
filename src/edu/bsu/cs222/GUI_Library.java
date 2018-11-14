@@ -63,14 +63,14 @@ public class GUI_Library extends Application {
 
         ChoiceBox<String> search_method = new ChoiceBox<String>();
         search_method.setTooltip(new Tooltip("Set method of search"));
-        search_method.getItems().addAll(contains,starts_with,ends_with);
+        search_method.getItems().addAll(ends_with,contains,starts_with);
 
         VBox root_2 = new VBox(search_method);
         search_grid.add(root_2,2,2);
 
         Button search_books = new Button("Search");
         search_books.setOnAction(e ->{
-            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.search(search_type.getSelectionModel().getSelectedItem(),term.getText()));
+            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
             String text_string = "";
             for(int i=0;i<list.size();i++){
                 text_string = text_string + "\n" + "\n" + list.get(i).toString();

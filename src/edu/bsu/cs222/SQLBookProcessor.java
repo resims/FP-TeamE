@@ -14,12 +14,9 @@ class SQLBookProcessor{
     static ResultSet viewAllTransactions() {
         return SQLProcessor.generateQueryResultSet("Select* from circulation;");
     }
-
-    static ResultSet search(String type, String term) {
-        return advancedSearch(type,term,0);
-    }
     static ResultSet advancedSearch(String type, String term, int qualifier) {
         //qualifier is -1 for %term (ends with), 0 for %term% (contains), 1 for term% (starts with)
+        qualifier -= 1;
         return SQLProcessor.generateQueryResultSet(SQLGenerator.search(type,term,qualifier));
     }
 
