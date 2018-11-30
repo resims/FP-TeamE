@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 class SQLUserProcessor {
-    String Username="";
+    static String Username="";
     static String getUserType(String username){
         ResultSet rs = SQLProcessor.generateQueryResultSet(SQLGenerator.getUserType(username));
         try {
@@ -34,11 +34,15 @@ class SQLUserProcessor {
         return false; //Failed to add username due to invalid characters
     }
     static boolean login(String username, String password){
-        return SQLProcessor.parseasString(SQLProcessor.generateQueryResultSet(SQLGenerator.getPassword(username))).contains(password);
+        boolean result= SQLProcessor.parseasString(SQLProcessor.generateQueryResultSet(SQLGenerator.getPassword(username))).contains(password);
+        if (result){
+            Username=username;
+        }
+        return result;
         //if the username does not exist, the results should be empty.
         //if the username does exist, the sql query responds with the password, and .contains() checks if the password matches.
     }
-    static ResultSet check_due_dates(String Username){
+    static ResultSet check_due_dates(){
         return  SQLProcessor.generateQueryResultSet(SQLGenerator.check_due_dates(Username));
     }
 }
