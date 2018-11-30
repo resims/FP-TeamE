@@ -63,18 +63,23 @@ public class GUI_Library extends Application {
 
         ChoiceBox<String> search_method = new ChoiceBox<String>();
         search_method.setTooltip(new Tooltip("Set method of search"));
-        search_method.getItems().addAll(contains,starts_with,ends_with);
+        search_method.getItems().addAll(ends_with,contains,starts_with);
 
         VBox root_2 = new VBox(search_method);
         search_grid.add(root_2,2,2);
 
         Button search_books = new Button("Search");
         search_books.setOnAction(e ->{
-            String text_string = SQLProcessor.parseasString(SQLBookProcessor.search(search_type.getSelectionModel().getSelectedItem(),term.getText()));
+            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
+            String text_string = "";
+            for(int i=0;i<list.size();i++){
+                text_string = text_string + "\n" + "\n" + list.get(i).toString();
+            }
+            //text_string.replaceAll(,"");
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
-            search_grid.add(results,1,4,100,100);
+            search_grid.add(results,1,4,40,100);
         });
         search_grid.add(search_books,5,2);
 
@@ -123,12 +128,16 @@ public class GUI_Library extends Application {
 
         Button Librarian_search_books = new Button("Search");
         Librarian_search_books.setOnAction(e ->{
-            String text_string = SQLProcessor.parseasString(SQLBookProcessor.search(search_type2.getSelectionModel().getSelectedItem(),term2.getText()));
-            System.out.print("text string="+text_string);
+            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.search(search_type2.getSelectionModel().getSelectedItem(),term2.getText()));
+            String text_string = "";
+            for(int i=0;i<list.size();i++){
+                text_string = text_string + "\n" + "\n" + list.get(i).toString();
+            }
+            //text_string.replaceAll(,"");
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
-            Librarian_search_grid.add(results,1,4,100,100);
+            Librarian_search_grid.add(results,1,4,40,100);
         });
         Librarian_search_grid.add(Librarian_search_books,5,2);
 
@@ -164,9 +173,6 @@ public class GUI_Library extends Application {
 
         TextField book_to_be_checked_out = new TextField("Barcode of book");
         Librarian_check_out_grid.add(book_to_be_checked_out,1,1);
-
-        TextField user_id_checking_out = new TextField("User ID");
-        Librarian_check_out_grid.add(user_id_checking_out,2,1);
 
         Button Librarian_check_in = new Button("Check In");
         Librarian_check_in.setOnAction(e ->{
@@ -278,7 +284,7 @@ public class GUI_Library extends Application {
                 popup_Stage.show();
             }
         });
-        Librarian_check_out_grid.add(Librarian_check_out,3,1);
+        Librarian_check_out_grid.add(Librarian_check_out,2,1);
         Scene Librarian_check_out_scene = new Scene(Librarian_check_out_grid, 960, 600);
 
         //Patron scene ---------------------------------------------------------------------------------------------
