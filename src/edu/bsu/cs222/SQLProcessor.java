@@ -78,7 +78,7 @@ class SQLProcessor {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.print(result.toString());
+
         return result.toString();
     }
     static ArrayList parseasList(ResultSet resultSet) {
