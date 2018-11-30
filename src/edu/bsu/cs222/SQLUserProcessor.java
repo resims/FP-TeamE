@@ -37,4 +37,7 @@ class SQLUserProcessor {
         //if the username does not exist, the results should be empty.
         //if the username does exist, the sql query responds with the password, and .contains() checks if the password matches.
     }
+    static ResultSet check_due_dates(String Username){
+        return  SQLProcessor.generateQueryResultSet(SQLGenerator.check_due_dates(Username));
+    }
 }

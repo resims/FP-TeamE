@@ -30,4 +30,7 @@ class SQLGenerator {
     static String getUserType(String username) {
         return "select Type from users where username='"+username+"';";
     }
+    static String check_due_dates(String Username){
+        return "select books.Title, books.barcode_number, rs1.due_date from books join (select * from circulation join users on circulation.user_id=users.ID where users.Username='"+Username+"' and circulation.checkin_date is null) as rs1 on rs1.book_id=books.barcode_number";
+    }
 }

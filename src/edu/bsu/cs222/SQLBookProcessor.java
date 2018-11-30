@@ -38,8 +38,8 @@ class SQLBookProcessor{
     static boolean checkout(int barcode_number, int UserID){
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable != 0) {
-            return true;
-        //SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number,UserID));
+        SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number,UserID));
+        return true;
         }else{return false;}
     }
 
@@ -47,8 +47,9 @@ class SQLBookProcessor{
     static boolean checkin(int barcode_number){
         int NumberAvailable = getAvailable(barcode_number);
         if (NumberAvailable !=1 ) {
+
+            SQLProcessor.executeSQL(SQLGenerator.checkin(barcode_number));
             return true;
-            //SQLProcessor.executeSQL(SQLGenerator.checkin(barcode_number));
         }else{return false;}
     }
 }
