@@ -128,7 +128,7 @@ public class GUI_Library extends Application {
 
         Button Librarian_search_books = new Button("Search");
         Librarian_search_books.setOnAction(e ->{
-            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.search(search_type2.getSelectionModel().getSelectedItem(),term2.getText()));
+            ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
             String text_string = "";
             for(int i=0;i<list.size();i++){
                 text_string = text_string + "\n" + "\n" + list.get(i).toString();
@@ -137,7 +137,7 @@ public class GUI_Library extends Application {
             TextArea results = new TextArea();
             results.setWrapText(true);
             results.setText(text_string);
-            Librarian_search_grid.add(results,1,4,40,100);
+            search_grid.add(results,1,4,40,100);
         });
         Librarian_search_grid.add(Librarian_search_books,5,2);
 

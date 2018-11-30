@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 class SQLUserProcessor {
+    String Username="";
     static String getUserType(String username){
         ResultSet rs = SQLProcessor.generateQueryResultSet(SQLGenerator.getUserType(username));
         try {

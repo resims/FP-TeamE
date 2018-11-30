@@ -50,9 +50,3 @@ class SQLBookProcessor{
         }else{return false;}
     }
 }
-
-
-
-
-
-

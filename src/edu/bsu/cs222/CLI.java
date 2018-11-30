@@ -31,8 +31,8 @@ public class CLI {
         waitForIt();
         SQLBookProcessor.checkin(2);
         SQLProcessor.parse(SQLBookProcessor.viewAllTransactions());
-        SQLBookProcessor.search("Title","H");
-        System.out.println(SQLBookProcessor.search("Author","T"));
+        SQLBookProcessor.advancedSearch("Title","H",0);
+        System.out.println(SQLBookProcessor.advancedSearch("Author","T",0));
         System.out.println(SQLProcessor.parseasList(SQLBookProcessor.advancedSearch("Author","e",-1)));
         System.out.print("Checking due date");
         System.out.print(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates("ajnull")));
