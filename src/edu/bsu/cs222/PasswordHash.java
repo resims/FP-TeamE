@@ -4,38 +4,42 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class PasswordHash {
-    public static final String SALT = "saltyText";
 
-    boolean isValid = false;
-    boolean authenticated = true;
-    boolean notAuthenticated = false;
+    //Hash function works by adding the salt key to a user's password
+    //Then running the combined string through a hashing algorithm
+    //This generates a 40 digit value that is stored in our database
+
+    public static final String SALT = "saltyText"; //This string is only known to the devs as an extra security measure
 
     //allow user to input information on GUI
-    public boolean userSignup(String usernameInput, String passwordInput, String typeInput) {
+    static boolean userSignup(String usernameInput, String passwordInput, String typeInput) {
+        boolean isValid = false;
+
+        //adds the salt key to user's password and hashes it
         String hashedPassword = createHashedPassword(passwordInput);
         isValid = SQLUserProcessor.addUser(usernameInput,hashedPassword,"Patron");
 
         if (isValid == true) {
-            return authenticated;
+            return true;
         }
-
         else {
-            return notAuthenticated;
+            return false;
         }
     }
 
     //allow user to input information on GUI
-    public boolean userLogin (String usernameInput, String passwordInput) {
+    static boolean userLogin (String usernameInput, String passwordInput) {
+        boolean isValid = false;
+
         String hashedPassword = createHashedPassword(passwordInput);
         SQLUserProcessor.login(usernameInput,hashedPassword);
 
         isValid = SQLUserProcessor.login(usernameInput,hashedPassword);
         if (isValid == true) {
-            return authenticated;
+            return true;
         }
-
         else {
-            return notAuthenticated;
+            return false;
         }
     }
 
@@ -45,7 +49,9 @@ public class PasswordHash {
 
         return hashedPassword;
     }
-    
+
+
+    //Hash function, SHA-1, was provided by Veera Sundar at https://dzone.com/articles/storing-passwords-java-web
     public static String generateHash(String input) {
         StringBuilder hash = new StringBuilder();
 

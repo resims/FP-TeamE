@@ -31,8 +31,8 @@ public class CLI {
         waitForIt();
         SQLBookProcessor.checkin(2);
         SQLProcessor.parse(SQLBookProcessor.viewAllTransactions());
-        SQLBookProcessor.search("Title","H");
-        System.out.println(SQLBookProcessor.search("Author","T"));
+        //SQLBookProcessor.search("Title","H");
+        //System.out.println(SQLBookProcessor.search("Author","T"));
         System.out.println(SQLProcessor.parseasList(SQLBookProcessor.advancedSearch("Author","e",-1)));
 }
 
