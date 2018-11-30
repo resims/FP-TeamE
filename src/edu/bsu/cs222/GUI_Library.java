@@ -174,6 +174,9 @@ public class GUI_Library extends Application {
         TextField book_to_be_checked_out = new TextField("Barcode of book");
         Librarian_check_out_grid.add(book_to_be_checked_out,1,1);
 
+        TextField user_to_be_checked_out = new TextField("User ID");
+        Librarian_check_out_grid.add(user_to_be_checked_out,2,1);
+
         Button Librarian_check_in = new Button("Check In");
         Librarian_check_in.setOnAction(e ->{
             boolean check =SQLBookProcessor.checkin(Integer.parseInt(book_to_be_checked_in.getText()));
@@ -233,7 +236,7 @@ public class GUI_Library extends Application {
 
         Button Librarian_check_out = new Button("Check out");
         Librarian_check_out.setOnAction(e ->{
-            boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()),1);//no way to check user ID yet, will see too it at a later time
+            boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()), Integer.parseInt(user_to_be_checked_out.getText()));//no way to check user ID yet, will see too it at a later time
             if (check){
                 Stage popup_Stage = new Stage();
                 popup_Stage.setTitle("Pop-up");
@@ -284,7 +287,7 @@ public class GUI_Library extends Application {
                 popup_Stage.show();
             }
         });
-        Librarian_check_out_grid.add(Librarian_check_out,2,1);
+        Librarian_check_out_grid.add(Librarian_check_out,3,1);
         Scene Librarian_check_out_scene = new Scene(Librarian_check_out_grid, 960, 600);
 
         //Patron scene ---------------------------------------------------------------------------------------------
