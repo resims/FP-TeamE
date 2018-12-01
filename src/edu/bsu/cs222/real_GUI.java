@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -443,6 +444,32 @@ public class real_GUI extends Application {
             check_out.setVisible(false);
 
             admin_Functions.setVisible(false);
+        });
+
+        due_dates.setOnAction(e ->{
+            GridPane due_date_grid = new GridPane();
+            due_date_grid.setPadding(new Insets(10, 10, 10, 10));
+            due_date_grid.setMinSize(800, 500);
+            due_date_grid.setVgap(5);
+            due_date_grid.setHgap(5);
+            due_date_grid.setStyle("-fx-background-color:  #800080;");
+
+            Button cancel = new Button("Cancel");
+            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+
+            TextArea checked_out_books = new TextArea();
+            checked_out_books.setWrapText(true);
+            checked_out_books.setText(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates()));
+
+            due_date_grid.setHalignment(checked_out_books,HPos.CENTER);
+            due_date_grid.add(checked_out_books,1,2,175,50);
+
+            due_date_grid.setHalignment(cancel,HPos.CENTER);
+            due_date_grid.add(cancel,1,51);
+
+            Scene due_date_scene = new Scene(due_date_grid, 960, 600);
+            SecondaryStage.setScene(due_date_scene);
+            SecondaryStage.show();
         });
 
         grid.add(username, 1, 1);
