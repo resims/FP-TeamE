@@ -37,7 +37,7 @@ public class real_GUI extends Application {
         Text password = new Text("Password:");
 
         TextField input_username = new TextField("Username");     //Typeable text
-        TextField input_password = new TextField("Password");
+        PasswordField input_password = new PasswordField();
 
 
         Button login = new Button("Login");   //Login buttons
@@ -73,7 +73,7 @@ public class real_GUI extends Application {
 
         login.setPrefSize(200, 25);
         login.setOnAction(e -> {
-            Boolean check = UserInfo.userLogin(input_username.getText(), input_password.getText());
+            boolean check = PasswordHash.userLogin(input_username.getText(), input_password.getText());
             if (check) {
                 String type = SQLUserProcessor.getUserType(input_username.getText());
                 username.setVisible(false);
@@ -92,38 +92,38 @@ public class real_GUI extends Application {
 
                 if (type.equals("Patron")) {
                     search.setPrefSize(400, 40);
-                    grid.setHalignment(search,HPos.CENTER);
+                    GridPane.setHalignment(search,HPos.CENTER);
                     reserve.setPrefSize(400, 40);
-                    grid.setHalignment(reserve,HPos.CENTER);
+                    GridPane.setHalignment(reserve,HPos.CENTER);
                     due_dates.setPrefSize(400, 40);
-                    grid.setHalignment(due_dates,HPos.CENTER);
+                    GridPane.setHalignment(due_dates,HPos.CENTER);
 
                 }
                 if (type.equals("Librarian")) {
                     search.setPrefSize(400, 40);
-                    grid.setHalignment(search,HPos.LEFT);
+                    GridPane.setHalignment(search,HPos.LEFT);
                     reserve.setPrefSize(400, 40);
-                    grid.setHalignment(reserve,HPos.LEFT);
+                    GridPane.setHalignment(reserve,HPos.LEFT);
                     due_dates.setPrefSize(400, 40);
-                    grid.setHalignment(due_dates,HPos.LEFT);
+                    GridPane.setHalignment(due_dates,HPos.LEFT);
                     check_in.setVisible(true);
                     check_in.setPrefSize(400, 40);
-                    grid.setHalignment(check_in,HPos.RIGHT);
+                    GridPane.setHalignment(check_in,HPos.RIGHT);
                     check_out.setVisible(true);
                     check_out.setPrefSize(400, 40);
-                    grid.setHalignment(check_out,HPos.RIGHT);
-                    grid.setHalignment(sign_out,HPos.RIGHT);
+                    GridPane.setHalignment(check_out,HPos.RIGHT);
+                    GridPane.setHalignment(sign_out,HPos.RIGHT);
                 }
                 if (type.equals("Dean")) {
-                    grid.setHalignment(search,HPos.LEFT);
-                    grid.setHalignment(reserve,HPos.LEFT);
-                    grid.setHalignment(due_dates,HPos.LEFT);
-                    grid.setHalignment(check_in,HPos.RIGHT);
-                    grid.setHalignment(check_out,HPos.RIGHT);
+                    GridPane.setHalignment(search,HPos.LEFT);
+                    GridPane.setHalignment(reserve,HPos.LEFT);
+                    GridPane.setHalignment(due_dates,HPos.LEFT);
+                    GridPane.setHalignment(check_in,HPos.RIGHT);
+                    GridPane.setHalignment(check_out,HPos.RIGHT);
                     admin_Functions.setVisible(true);
                     admin_Functions.setPrefSize(400, 40);
-                    grid.setHalignment(admin_Functions,HPos.CENTER);
-                    grid.setHalignment(sign_out,HPos.RIGHT);
+                    GridPane.setHalignment(admin_Functions,HPos.CENTER);
+                    GridPane.setHalignment(sign_out,HPos.RIGHT);
                 }
             }else{
 
@@ -137,9 +137,7 @@ public class real_GUI extends Application {
                 popup_grid.add(warning, 1, 1);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -152,7 +150,7 @@ public class real_GUI extends Application {
         SignUp.setPrefSize(200, 25);
         SignUp.setOnAction(e -> {
 
-            boolean check = UserInfo.userSignup(input_username.getText(), input_password.getText(), "Patron");
+            boolean check = PasswordHash.userSignup(input_username.getText(), input_password.getText(), "Patron");
 
             if (check) {
                 Stage popup_Stage = new Stage();
@@ -363,7 +361,7 @@ public class real_GUI extends Application {
 
             Button inner_check_out = new Button("Check out");
             inner_check_out.setOnAction(e2 ->{
-                boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()),Integer.parseInt(user_id_checking_out.getText()));//no way to check user ID yet, will see too it at a later time
+                boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()),Integer.parseInt(user_id_checking_out.getText()));
                 if (check){
                     Stage popup_Stage = new Stage();
                     popup_Stage.setTitle("Pop-up");

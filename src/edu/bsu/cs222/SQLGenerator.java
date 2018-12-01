@@ -33,4 +33,12 @@ class SQLGenerator {
     static String check_due_dates(String Username){
         return "select books.Title, books.barcode_number, rs1.due_date from books join (select * from circulation join users on circulation.user_id=users.ID where users.Username='"+Username+"' and circulation.checkin_date is null) as rs1 on rs1.book_id=books.barcode_number";
     }
+
+    public static String update_due_date(String user_id, String book_id, String newDueDate) {
+        return "UPDATE `circulation` SET `due_date` = '"+newDueDate+"' WHERE user_id="+user_id+" and book_id="+book_id+" and checkin_date is null limit 1;";
+    }
+
+    public static String removeUser(String user_id) {
+        return "DELETE FROM `users` WHERE `users`.`ID` = "+user_id;
+    }
 }

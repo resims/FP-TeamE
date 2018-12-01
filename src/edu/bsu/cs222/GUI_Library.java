@@ -109,7 +109,7 @@ public class GUI_Library extends Application {
         Librarian_search_grid.add(term2,3,2);
 
         Button cancel_2 = new Button("Cancel");
-        cancel_2.setOnAction(e ->{PrimaryStage.setScene(this.SecondaryStage.getScene());});
+        cancel_2.setOnAction(e -> PrimaryStage.setScene(this.SecondaryStage.getScene()));
         Librarian_search_grid.add(cancel_2,6,2);
 
         ChoiceBox<String> search_type2 = new ChoiceBox<String>();
@@ -129,14 +129,14 @@ public class GUI_Library extends Application {
         Button Librarian_search_books = new Button("Search");
         Librarian_search_books.setOnAction(e ->{
             ArrayList list = SQLProcessor.parseasList(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
-            String text_string = "";
-            for(int i=0;i<list.size();i++){
-                text_string = text_string + "\n" + "\n" + list.get(i).toString();
+            StringBuilder text_string = new StringBuilder();
+            for (Object aList : list) {
+                text_string.append("\n").append("\n").append(aList.toString());
             }
             //text_string.replaceAll(,"");
             TextArea results = new TextArea();
             results.setWrapText(true);
-            results.setText(text_string);
+            results.setText(text_string.toString());
             search_grid.add(results,1,4,40,100);
         });
         Librarian_search_grid.add(Librarian_search_books,5,2);
@@ -164,11 +164,11 @@ public class GUI_Library extends Application {
 
 
         Button cancel_3 = new Button("Cancel");
-        cancel_3.setOnAction(e ->{PrimaryStage.setScene(this.SecondaryStage.getScene());});
+        cancel_3.setOnAction(e -> PrimaryStage.setScene(this.SecondaryStage.getScene()));
         Librarian_check_in_grid.add(cancel_3,6,4);
 
         Button cancel_4 = new Button("Cancel");
-        cancel_4.setOnAction(e ->{PrimaryStage.setScene(this.SecondaryStage.getScene());});
+        cancel_4.setOnAction(e -> PrimaryStage.setScene(this.SecondaryStage.getScene()));
         Librarian_check_out_grid.add(cancel_4,6,2);
 
         TextField book_to_be_checked_out = new TextField("Barcode of book");
@@ -192,9 +192,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(success, HPos.CENTER);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -219,9 +217,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(warning_2, HPos.CENTER);
 
                 Button close_popup = new Button("Close");
-                close_popup.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_popup.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_popup, 1, 3);
                 GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -249,9 +245,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(success, HPos.CENTER);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -276,9 +270,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(warning_2, HPos.CENTER);
 
                 Button close_popup = new Button("Close");
-                close_popup.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_popup.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_popup, 1, 3);
                 GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -306,35 +298,33 @@ public class GUI_Library extends Application {
         });
         search.setPrefSize(400, 40);
         Patron_grid.add(search, 1, 1,2,1);
-        Patron_grid.setHalignment(search,HPos.CENTER);
+        GridPane.setHalignment(search,HPos.CENTER);
 
         Button reserve = new Button("Reserve books");
         reserve.setPrefSize(400, 40);
         Patron_grid.add(reserve, 1, 2,2,1);
-        Patron_grid.setHalignment(reserve,HPos.CENTER);
+        GridPane.setHalignment(reserve,HPos.CENTER);
 
 
         Button due_dates = new Button("Check current due dates");
         due_dates.setPrefSize(400, 40);
         Patron_grid.add(due_dates, 1, 3,2,1);
-        Patron_grid.setHalignment(due_dates,HPos.CENTER);
+        GridPane.setHalignment(due_dates,HPos.CENTER);
 
         Patron_grid.setAlignment(Pos.CENTER);
 
         Button sign_out = new Button("Sign Out");
-        sign_out.setOnAction(e ->{
-           PrimaryStage.setScene(this.login_scene);
-        });
+        sign_out.setOnAction(e -> PrimaryStage.setScene(this.login_scene));
         sign_out.setPrefSize(100,20);
         Patron_grid.add(sign_out,3,5);
-        Patron_grid.setHalignment(sign_out,HPos.LEFT);
+        GridPane.setHalignment(sign_out,HPos.LEFT);
 
 
         Button close = new Button("Exit");
-        close.setOnAction(e ->{PrimaryStage.close();});
+        close.setOnAction(e -> PrimaryStage.close());
         close.setPrefSize(100,20);
         Patron_grid.add(close,0,5);
-        Patron_grid.setHalignment(close,HPos.RIGHT);
+        GridPane.setHalignment(close,HPos.RIGHT);
 
         Text time = new Text();
         time.setText("Eventaully ill add this time in");
@@ -427,7 +417,7 @@ public class GUI_Library extends Application {
         Button Login = new Button("Login");
         Login.setPrefSize(200, 25);
         Login.setOnAction(e -> {
-            Boolean check = UserInfo.userLogin(user.getText(), pass.getText());
+            boolean check = PasswordHash.userLogin(user.getText(), pass.getText());
             if (check) {
                 String type = SQLUserProcessor.getUserType(user.getText());
                 if (type.equals("Patron")) {
@@ -451,9 +441,7 @@ public class GUI_Library extends Application {
                 popup_grid.add(warning, 1, 1);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -467,7 +455,7 @@ public class GUI_Library extends Application {
         SignUp.setPrefSize(200, 25);
         SignUp.setOnAction(e -> {
 
-            boolean check = UserInfo.userSignup(user.getText(), pass.getText(), "Patron");
+            boolean check = PasswordHash.userSignup(user.getText(), pass.getText(), "Patron");
 
             if (check) {
                 Stage popup_Stage = new Stage();
@@ -486,9 +474,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(success_2, HPos.CENTER);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -513,9 +499,7 @@ public class GUI_Library extends Application {
                 GridPane.setHalignment(warning_2, HPos.CENTER);
 
                 Button close_popup = new Button("Close");
-                close_popup.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_popup.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_popup, 1, 3);
                 GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -529,9 +513,7 @@ public class GUI_Library extends Application {
 
         Button close_login = new Button("close");
         close_login.setPrefSize(200, 25);
-        close_login.setOnAction(e -> {
-            PrimaryStage.close();
-        });
+        close_login.setOnAction(e -> PrimaryStage.close());
 
         Login_grid.add(username, 1, 1);
         Login_grid.add(password, 1, 2);
