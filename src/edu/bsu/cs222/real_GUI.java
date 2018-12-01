@@ -3,8 +3,6 @@ package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -38,7 +36,7 @@ public class real_GUI extends Application {
         Text password = new Text("Password:");
 
         TextField input_username = new TextField("Username");     //Typeable text
-        TextField input_password = new TextField("Password");
+        PasswordField input_password = new PasswordField();
 
 
         Button login = new Button("Login");   //Login buttons
@@ -462,13 +460,96 @@ public class real_GUI extends Application {
             checked_out_books.setText(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates()));
 
             due_date_grid.setHalignment(checked_out_books,HPos.CENTER);
-            due_date_grid.add(checked_out_books,1,2,175,50);
+            due_date_grid.add(checked_out_books,1,2,175,80);
 
             due_date_grid.setHalignment(cancel,HPos.CENTER);
-            due_date_grid.add(cancel,1,51);
+            due_date_grid.add(cancel,75,85);
 
             Scene due_date_scene = new Scene(due_date_grid, 960, 600);
             SecondaryStage.setScene(due_date_scene);
+            SecondaryStage.show();
+        });
+
+        reserve.setOnAction(e ->{
+            GridPane reserve_grid = new GridPane();
+            reserve_grid.setPadding(new Insets(10, 10, 10, 10));
+            reserve_grid.setMinSize(800, 500);
+            reserve_grid.setVgap(5);
+            reserve_grid.setHgap(5);
+            reserve_grid.setStyle("-fx-background-color:  #800080;");
+
+            Button cancel = new Button("Cancel");
+            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+
+            Text to_reserve = new Text("Book to reserve");
+
+            TextField book_to_reserve = new TextField("Barcode Number");
+
+            Button reserve_book = new Button("Reserve");
+            reserve_book.setOnAction(e2 ->{
+                boolean check =false;  // change this to an SQL processor statement to add functionality to this button
+                if (check){
+                    Stage popup_Stage = new Stage();
+                    popup_Stage.setTitle("Pop-up");
+
+                    GridPane popup_grid = new GridPane();
+
+                    Text success = new Text("Reservation Successful!");
+                    success.setFont(Font.font(18));
+                    popup_grid.add(success, 1, 1);
+                    GridPane.setHalignment(success, HPos.CENTER);
+
+                    Button close_warn = new Button("Close");
+                    close_warn.setOnAction(e3 -> {
+                        popup_Stage.close();
+                    });
+                    popup_grid.add(close_warn, 1, 3);
+                    GridPane.setHalignment(close_warn, HPos.CENTER);
+
+                    Scene popup_Scene = new Scene(popup_grid, 300, 100);
+                    popup_Stage.setScene(popup_Scene);
+                    popup_Stage.show();
+                }else{
+                    Stage popup_Stage = new Stage();
+                    popup_Stage.setTitle("Warning");
+
+                    GridPane popup_grid = new GridPane();
+
+                    Text warning = new Text("Unable to reserve.");
+                    warning.setFont(Font.font(18));
+                    popup_grid.add(warning, 1, 1);
+                    GridPane.setHalignment(warning, HPos.CENTER);
+
+
+                    Text warning_2 = new Text("Please check barcode and/or Availability");
+                    warning_2.setFont(Font.font(14));
+                    popup_grid.add(warning_2, 1, 2);
+                    GridPane.setHalignment(warning_2, HPos.CENTER);
+
+                    Button close_popup = new Button("Close");
+                    close_popup.setOnAction(e3 -> {
+                        popup_Stage.close();
+                    });
+                    popup_grid.add(close_popup, 1, 3);
+                    GridPane.setHalignment(close_popup, HPos.CENTER);
+
+                    Scene Popup_Scene = new Scene(popup_grid, 300, 100);
+                    popup_Stage.setScene(Popup_Scene);
+                    popup_Stage.show();
+                }
+            });
+
+            reserve_grid.add(to_reserve,1,2);
+            reserve_grid.add(book_to_reserve,2,2);
+            reserve_grid.add(reserve_book,3,2);
+
+
+
+            reserve_grid.setHalignment(cancel,HPos.CENTER);
+            reserve_grid.add(cancel,75,85);
+
+            Scene reserve_scene = new Scene(reserve_grid, 960, 600);
+            SecondaryStage.setScene(reserve_scene);
             SecondaryStage.show();
         });
 
