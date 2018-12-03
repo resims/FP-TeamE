@@ -16,7 +16,7 @@ import static edu.bsu.cs222.PasswordHash.*;
 public class real_GUI extends Application {
 
     private Stage SecondaryStage = new Stage();
-    //username storage updates on signin sign out
+    //username storage updates on sign in sign out
 
     @Override
     public void start(Stage primaryStage){
@@ -36,7 +36,7 @@ public class real_GUI extends Application {
         Text username = new Text("Username:");      //visible texts
         Text password = new Text("Password:");
 
-        TextField input_username = new TextField("Username");     //Typeable text
+        TextField input_username = new TextField("Username");     //Type able text
         PasswordField input_password = new PasswordField();
 
 
@@ -481,7 +481,7 @@ public class real_GUI extends Application {
             reserve_book.setOnAction(e2 ->{
                 boolean check =false;  // change this to an SQL processor statement to add functionality to this button
                 //noinspection ConstantConditions
-                if (check){ //surpressed warning due to check always being false, needed for future development
+                if (check){ //suppressed warning due to check always being false, needed for future development
                     Stage popup_Stage = new Stage();
                     popup_Stage.setTitle("Pop-up");
 
