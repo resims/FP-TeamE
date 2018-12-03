@@ -3,8 +3,6 @@ package edu.bsu.cs222;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -13,11 +11,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static edu.bsu.cs222.PasswordHash.*;
+
 public class real_GUI extends Application {
 
-    private PasswordHash UserInfo = new PasswordHash();
     private Stage SecondaryStage = new Stage();
-    //username storage updates on signin sign out
+    //username storage updates on sign in sign out
 
     @Override
     public void start(Stage primaryStage){
@@ -37,17 +36,15 @@ public class real_GUI extends Application {
         Text username = new Text("Username:");      //visible texts
         Text password = new Text("Password:");
 
-        TextField input_username = new TextField("Username");     //Typeable text
+        TextField input_username = new TextField("Username");     //Type able text
         PasswordField input_password = new PasswordField();
 
 
         Button login = new Button("Login");   //Login buttons
         Button SignUp = new Button("Sign up");
 
-        Button close = new Button("close"); //close, duh
-        close.setOnAction(e ->{
-            primaryStage.close();
-        });
+        Button close = new Button("close"); //close primaryStage
+        close.setOnAction(e -> primaryStage.close());
 
         Button search = new Button("Search Books");
         search.setVisible(false);
@@ -74,7 +71,8 @@ public class real_GUI extends Application {
 
         login.setPrefSize(200, 25);
         login.setOnAction(e -> {
-            boolean check = PasswordHash.userLogin(input_username.getText(), input_password.getText());
+            boolean check = userLogin(input_username.getText(), input_password.getText());
+
             if (check) {
                 String type = SQLUserProcessor.getUserType(input_username.getText());
                 username.setVisible(false);
@@ -151,7 +149,7 @@ public class real_GUI extends Application {
         SignUp.setPrefSize(200, 25);
         SignUp.setOnAction(e -> {
 
-            boolean check = PasswordHash.userSignup(input_username.getText(), input_password.getText(), "Patron");
+            boolean check = userSignup(input_username.getText(), input_password.getText(), "Patron");
 
             if (check) {
                 Stage popup_Stage = new Stage();
@@ -170,9 +168,7 @@ public class real_GUI extends Application {
                 GridPane.setHalignment(success_2, HPos.CENTER);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -197,9 +193,7 @@ public class real_GUI extends Application {
                 GridPane.setHalignment(warning_2, HPos.CENTER);
 
                 Button close_popup = new Button("Close");
-                close_popup.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_popup.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_popup, 1, 3);
                 GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -229,22 +223,26 @@ public class real_GUI extends Application {
             String starts_with = "Starts with";
             String ends_with = "Ends with";
 
-            TextField term = new TextField();
+            TextField term = new TextField("Term");
             term.setPrefSize(100,25);
             search_grid.add(term,3,2);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             search_grid.add(cancel,6,2);
 
-            ChoiceBox<String> search_type = new ChoiceBox<String>();
+            ChoiceBox<String> search_type = new ChoiceBox<>();
+            search_type.isShowing();
+            search_type.setValue("Title");
             search_type.setTooltip(new Tooltip("Search terms type"));
             search_type.getItems().addAll(title,barcode,source_type,author,call_number,isbn);
 
             VBox root = new VBox(search_type);
             search_grid.add(root,1,2);
 
-            ChoiceBox<String> search_method = new ChoiceBox<String>();
+            ChoiceBox<String> search_method = new ChoiceBox<>();
+            search_method.isShowing();
+            search_method.setValue("Contains");
             search_method.setTooltip(new Tooltip("Set method of search"));
             search_method.getItems().addAll(ends_with,contains,starts_with);
 
@@ -255,6 +253,7 @@ public class real_GUI extends Application {
             search_books.setOnAction(e2 ->{
                 String text_string = SQLProcessor.parseasString(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
                 TextArea results = new TextArea();
+                results.setEditable(false);
                 results.setWrapText(true);
                 results.setText(text_string);
                 search_grid.add(results,1,4,100,100);
@@ -279,7 +278,7 @@ public class real_GUI extends Application {
             check_in_grid.add(book_to_be_checked_in,1,1);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             check_in_grid.add(cancel,6,4);
 
             Button inner_check_in = new Button("Check In");
@@ -297,9 +296,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(success, HPos.CENTER);
 
                     Button close_warn = new Button("Close");
-                    close_warn.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_warn, 1, 3);
                     GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -324,9 +321,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(warning_2, HPos.CENTER);
 
                     Button close_popup = new Button("Close");
-                    close_popup.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_popup, 1, 3);
                     GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -354,7 +349,7 @@ public class real_GUI extends Application {
             check_out_grid.add(book_to_be_checked_out,1,1);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             check_out_grid.add(cancel,6,2);
 
             TextField user_id_checking_out = new TextField("User ID");
@@ -362,7 +357,7 @@ public class real_GUI extends Application {
 
             Button inner_check_out = new Button("Check out");
             inner_check_out.setOnAction(e2 ->{
-                boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()),Integer.parseInt(user_id_checking_out.getText()));
+                boolean check =SQLBookProcessor.checkout(Integer.parseInt(book_to_be_checked_out.getText()),Integer.parseInt(user_id_checking_out.getText()));//no way to check user ID yet, will see too it at a later time
                 if (check){
                     Stage popup_Stage = new Stage();
                     popup_Stage.setTitle("Pop-up");
@@ -375,9 +370,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(success, HPos.CENTER);
 
                     Button close_warn = new Button("Close");
-                    close_warn.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_warn, 1, 3);
                     GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -402,9 +395,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(warning_2, HPos.CENTER);
 
                     Button close_popup = new Button("Close");
-                    close_popup.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_popup, 1, 3);
                     GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -453,20 +444,101 @@ public class real_GUI extends Application {
             due_date_grid.setStyle("-fx-background-color:  #800080;");
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
 
             TextArea checked_out_books = new TextArea();
             checked_out_books.setWrapText(true);
+            checked_out_books.setEditable(false);
             checked_out_books.setText(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates()));
 
-            due_date_grid.setHalignment(checked_out_books,HPos.CENTER);
-            due_date_grid.add(checked_out_books,1,2,175,50);
+            GridPane.setHalignment(checked_out_books,HPos.CENTER);
+            due_date_grid.add(checked_out_books,1,2,175,80);
 
-            due_date_grid.setHalignment(cancel,HPos.CENTER);
-            due_date_grid.add(cancel,1,51);
+            GridPane.setHalignment(cancel,HPos.CENTER);
+            due_date_grid.add(cancel,75,85);
 
             Scene due_date_scene = new Scene(due_date_grid, 960, 600);
             SecondaryStage.setScene(due_date_scene);
+            SecondaryStage.show();
+        });
+
+        reserve.setOnAction(e ->{
+            GridPane reserve_grid = new GridPane();
+            reserve_grid.setPadding(new Insets(10, 10, 10, 10));
+            reserve_grid.setMinSize(800, 500);
+            reserve_grid.setVgap(5);
+            reserve_grid.setHgap(5);
+            reserve_grid.setStyle("-fx-background-color:  #800080;");
+
+            Button cancel = new Button("Cancel");
+            cancel.setOnAction(e2 -> SecondaryStage.close());
+
+            Text to_reserve = new Text("Book to reserve");
+
+            TextField book_to_reserve = new TextField("Barcode Number");
+
+            Button reserve_book = new Button("Reserve");
+            reserve_book.setOnAction(e2 ->{
+                boolean check =false;  // change this to an SQL processor statement to add functionality to this button
+                //noinspection ConstantConditions
+                if (check){ //suppressed warning due to check always being false, needed for future development
+                    Stage popup_Stage = new Stage();
+                    popup_Stage.setTitle("Pop-up");
+
+                    GridPane popup_grid = new GridPane();
+
+                    Text success = new Text("Reservation Successful!");
+                    success.setFont(Font.font(18));
+                    popup_grid.add(success, 1, 1);
+                    GridPane.setHalignment(success, HPos.CENTER);
+
+                    Button close_warn = new Button("Close");
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
+                    popup_grid.add(close_warn, 1, 3);
+                    GridPane.setHalignment(close_warn, HPos.CENTER);
+
+                    Scene popup_Scene = new Scene(popup_grid, 300, 100);
+                    popup_Stage.setScene(popup_Scene);
+                    popup_Stage.show();
+                }else{
+                    Stage popup_Stage = new Stage();
+                    popup_Stage.setTitle("Warning");
+
+                    GridPane popup_grid = new GridPane();
+
+                    Text warning = new Text("Unable to reserve.");
+                    warning.setFont(Font.font(18));
+                    popup_grid.add(warning, 1, 1);
+                    GridPane.setHalignment(warning, HPos.CENTER);
+
+
+                    Text warning_2 = new Text("Please check barcode and/or Availability");
+                    warning_2.setFont(Font.font(14));
+                    popup_grid.add(warning_2, 1, 2);
+                    GridPane.setHalignment(warning_2, HPos.CENTER);
+
+                    Button close_popup = new Button("Close");
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
+                    popup_grid.add(close_popup, 1, 3);
+                    GridPane.setHalignment(close_popup, HPos.CENTER);
+
+                    Scene Popup_Scene = new Scene(popup_grid, 300, 100);
+                    popup_Stage.setScene(Popup_Scene);
+                    popup_Stage.show();
+                }
+            });
+
+            reserve_grid.add(to_reserve,1,2);
+            reserve_grid.add(book_to_reserve,2,2);
+            reserve_grid.add(reserve_book,3,2);
+
+
+
+            GridPane.setHalignment(cancel,HPos.CENTER);
+            reserve_grid.add(cancel,75,85);
+
+            Scene reserve_scene = new Scene(reserve_grid, 960, 600);
+            SecondaryStage.setScene(reserve_scene);
             SecondaryStage.show();
         });
 
