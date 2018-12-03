@@ -42,7 +42,7 @@ public class real_GUI extends Application {
         Button login = new Button("Login");   //Login buttons
         Button SignUp = new Button("Sign up");
 
-        Button close = new Button("close"); //close, duh
+        Button close = new Button("close"); //close primaryStage
         close.setOnAction(e ->{
             primaryStage.close();
         });
@@ -229,7 +229,7 @@ public class real_GUI extends Application {
             String starts_with = "Starts with";
             String ends_with = "Ends with";
 
-            TextField term = new TextField();
+            TextField term = new TextField("Term");
             term.setPrefSize(100,25);
             search_grid.add(term,3,2);
 
@@ -237,7 +237,9 @@ public class real_GUI extends Application {
             cancel.setOnAction(e2 ->{SecondaryStage.close();});
             search_grid.add(cancel,6,2);
 
-            ChoiceBox<String> search_type = new ChoiceBox<String>();
+            ChoiceBox<String> search_type = new ChoiceBox<>();
+            search_type.isShowing();
+            search_type.setValue("Title");
             search_type.setTooltip(new Tooltip("Search terms type"));
             search_type.getItems().addAll(title,barcode,source_type,author,call_number,isbn);
 
@@ -245,6 +247,8 @@ public class real_GUI extends Application {
             search_grid.add(root,1,2);
 
             ChoiceBox<String> search_method = new ChoiceBox<String>();
+            search_method.isShowing();
+            search_method.setValue("Contains");
             search_method.setTooltip(new Tooltip("Set method of search"));
             search_method.getItems().addAll(ends_with,contains,starts_with);
 
