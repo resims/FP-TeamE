@@ -454,7 +454,7 @@ public class real_GUI extends Application {
             GridPane.setHalignment(checked_out_books,HPos.CENTER);
             due_date_grid.add(checked_out_books,1,2,175,80);
 
-            due_date_grid.setHalignment(cancel,HPos.CENTER);
+            GridPane.setHalignment(cancel,HPos.CENTER);
             due_date_grid.add(cancel,75,85);
 
             Scene due_date_scene = new Scene(due_date_grid, 960, 600);
@@ -480,7 +480,8 @@ public class real_GUI extends Application {
             Button reserve_book = new Button("Reserve");
             reserve_book.setOnAction(e2 ->{
                 boolean check =false;  // change this to an SQL processor statement to add functionality to this button
-                if (check){
+                //noinspection ConstantConditions
+                if (check){ //surpressed warning due to check always being false, needed for future development
                     Stage popup_Stage = new Stage();
                     popup_Stage.setTitle("Pop-up");
 
@@ -492,9 +493,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(success, HPos.CENTER);
 
                     Button close_warn = new Button("Close");
-                    close_warn.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_warn, 1, 3);
                     GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -519,9 +518,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(warning_2, HPos.CENTER);
 
                     Button close_popup = new Button("Close");
-                    close_popup.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_popup, 1, 3);
                     GridPane.setHalignment(close_popup, HPos.CENTER);
 
