@@ -11,9 +11,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static edu.bsu.cs222.PasswordHash.*;
+
 public class real_GUI extends Application {
 
-    private PasswordHash UserInfo = new PasswordHash();
     private Stage SecondaryStage = new Stage();
     //username storage updates on signin sign out
 
@@ -43,9 +44,7 @@ public class real_GUI extends Application {
         Button SignUp = new Button("Sign up");
 
         Button close = new Button("close"); //close primaryStage
-        close.setOnAction(e ->{
-            primaryStage.close();
-        });
+        close.setOnAction(e -> primaryStage.close());
 
         Button search = new Button("Search Books");
         search.setVisible(false);
@@ -72,7 +71,8 @@ public class real_GUI extends Application {
 
         login.setPrefSize(200, 25);
         login.setOnAction(e -> {
-            Boolean check = UserInfo.userLogin(input_username.getText(), input_password.getText());
+            boolean check = userLogin(input_username.getText(), input_password.getText());
+
             if (check) {
                 String type = SQLUserProcessor.getUserType(input_username.getText());
                 username.setVisible(false);
@@ -91,38 +91,38 @@ public class real_GUI extends Application {
 
                 if (type.equals("Patron")) {
                     search.setPrefSize(400, 40);
-                    grid.setHalignment(search,HPos.CENTER);
+                    GridPane.setHalignment(search,HPos.CENTER);
                     reserve.setPrefSize(400, 40);
-                    grid.setHalignment(reserve,HPos.CENTER);
+                    GridPane.setHalignment(reserve,HPos.CENTER);
                     due_dates.setPrefSize(400, 40);
-                    grid.setHalignment(due_dates,HPos.CENTER);
+                    GridPane.setHalignment(due_dates,HPos.CENTER);
 
                 }
                 if (type.equals("Librarian")) {
                     search.setPrefSize(400, 40);
-                    grid.setHalignment(search,HPos.LEFT);
+                    GridPane.setHalignment(search,HPos.LEFT);
                     reserve.setPrefSize(400, 40);
-                    grid.setHalignment(reserve,HPos.LEFT);
+                    GridPane.setHalignment(reserve,HPos.LEFT);
                     due_dates.setPrefSize(400, 40);
-                    grid.setHalignment(due_dates,HPos.LEFT);
+                    GridPane.setHalignment(due_dates,HPos.LEFT);
                     check_in.setVisible(true);
                     check_in.setPrefSize(400, 40);
-                    grid.setHalignment(check_in,HPos.RIGHT);
+                    GridPane.setHalignment(check_in,HPos.RIGHT);
                     check_out.setVisible(true);
                     check_out.setPrefSize(400, 40);
-                    grid.setHalignment(check_out,HPos.RIGHT);
-                    grid.setHalignment(sign_out,HPos.RIGHT);
+                    GridPane.setHalignment(check_out,HPos.RIGHT);
+                    GridPane.setHalignment(sign_out,HPos.RIGHT);
                 }
                 if (type.equals("Dean")) {
-                    grid.setHalignment(search,HPos.LEFT);
-                    grid.setHalignment(reserve,HPos.LEFT);
-                    grid.setHalignment(due_dates,HPos.LEFT);
-                    grid.setHalignment(check_in,HPos.RIGHT);
-                    grid.setHalignment(check_out,HPos.RIGHT);
+                    GridPane.setHalignment(search,HPos.LEFT);
+                    GridPane.setHalignment(reserve,HPos.LEFT);
+                    GridPane.setHalignment(due_dates,HPos.LEFT);
+                    GridPane.setHalignment(check_in,HPos.RIGHT);
+                    GridPane.setHalignment(check_out,HPos.RIGHT);
                     admin_Functions.setVisible(true);
                     admin_Functions.setPrefSize(400, 40);
-                    grid.setHalignment(admin_Functions,HPos.CENTER);
-                    grid.setHalignment(sign_out,HPos.RIGHT);
+                    GridPane.setHalignment(admin_Functions,HPos.CENTER);
+                    GridPane.setHalignment(sign_out,HPos.RIGHT);
                 }
             }else{
 
@@ -136,9 +136,7 @@ public class real_GUI extends Application {
                 popup_grid.add(warning, 1, 1);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -151,7 +149,7 @@ public class real_GUI extends Application {
         SignUp.setPrefSize(200, 25);
         SignUp.setOnAction(e -> {
 
-            boolean check = UserInfo.userSignup(input_username.getText(), input_password.getText(), "Patron");
+            boolean check = userSignup(input_username.getText(), input_password.getText(), "Patron");
 
             if (check) {
                 Stage popup_Stage = new Stage();
@@ -170,9 +168,7 @@ public class real_GUI extends Application {
                 GridPane.setHalignment(success_2, HPos.CENTER);
 
                 Button close_warn = new Button("Close");
-                close_warn.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_warn.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_warn, 1, 3);
                 GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -197,9 +193,7 @@ public class real_GUI extends Application {
                 GridPane.setHalignment(warning_2, HPos.CENTER);
 
                 Button close_popup = new Button("Close");
-                close_popup.setOnAction(e2 -> {
-                    popup_Stage.close();
-                });
+                close_popup.setOnAction(e2 -> popup_Stage.close());
                 popup_grid.add(close_popup, 1, 3);
                 GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -234,7 +228,7 @@ public class real_GUI extends Application {
             search_grid.add(term,3,2);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             search_grid.add(cancel,6,2);
 
             ChoiceBox<String> search_type = new ChoiceBox<>();
@@ -246,7 +240,7 @@ public class real_GUI extends Application {
             VBox root = new VBox(search_type);
             search_grid.add(root,1,2);
 
-            ChoiceBox<String> search_method = new ChoiceBox<String>();
+            ChoiceBox<String> search_method = new ChoiceBox<>();
             search_method.isShowing();
             search_method.setValue("Contains");
             search_method.setTooltip(new Tooltip("Set method of search"));
@@ -259,6 +253,7 @@ public class real_GUI extends Application {
             search_books.setOnAction(e2 ->{
                 String text_string = SQLProcessor.parseasString(SQLBookProcessor.advancedSearch(search_type.getSelectionModel().getSelectedItem(),term.getText(),search_method.getSelectionModel().getSelectedIndex()));
                 TextArea results = new TextArea();
+                results.setEditable(false);
                 results.setWrapText(true);
                 results.setText(text_string);
                 search_grid.add(results,1,4,100,100);
@@ -283,7 +278,7 @@ public class real_GUI extends Application {
             check_in_grid.add(book_to_be_checked_in,1,1);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             check_in_grid.add(cancel,6,4);
 
             Button inner_check_in = new Button("Check In");
@@ -301,9 +296,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(success, HPos.CENTER);
 
                     Button close_warn = new Button("Close");
-                    close_warn.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_warn, 1, 3);
                     GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -328,9 +321,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(warning_2, HPos.CENTER);
 
                     Button close_popup = new Button("Close");
-                    close_popup.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_popup, 1, 3);
                     GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -358,7 +349,7 @@ public class real_GUI extends Application {
             check_out_grid.add(book_to_be_checked_out,1,1);
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
             check_out_grid.add(cancel,6,2);
 
             TextField user_id_checking_out = new TextField("User ID");
@@ -379,9 +370,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(success, HPos.CENTER);
 
                     Button close_warn = new Button("Close");
-                    close_warn.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_warn.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_warn, 1, 3);
                     GridPane.setHalignment(close_warn, HPos.CENTER);
 
@@ -406,9 +395,7 @@ public class real_GUI extends Application {
                     GridPane.setHalignment(warning_2, HPos.CENTER);
 
                     Button close_popup = new Button("Close");
-                    close_popup.setOnAction(e3 -> {
-                        popup_Stage.close();
-                    });
+                    close_popup.setOnAction(e3 -> popup_Stage.close());
                     popup_grid.add(close_popup, 1, 3);
                     GridPane.setHalignment(close_popup, HPos.CENTER);
 
@@ -457,13 +444,14 @@ public class real_GUI extends Application {
             due_date_grid.setStyle("-fx-background-color:  #800080;");
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
 
             TextArea checked_out_books = new TextArea();
             checked_out_books.setWrapText(true);
+            checked_out_books.setEditable(false);
             checked_out_books.setText(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates()));
 
-            due_date_grid.setHalignment(checked_out_books,HPos.CENTER);
+            GridPane.setHalignment(checked_out_books,HPos.CENTER);
             due_date_grid.add(checked_out_books,1,2,175,80);
 
             due_date_grid.setHalignment(cancel,HPos.CENTER);
@@ -483,7 +471,7 @@ public class real_GUI extends Application {
             reserve_grid.setStyle("-fx-background-color:  #800080;");
 
             Button cancel = new Button("Cancel");
-            cancel.setOnAction(e2 ->{SecondaryStage.close();});
+            cancel.setOnAction(e2 -> SecondaryStage.close());
 
             Text to_reserve = new Text("Book to reserve");
 
@@ -549,7 +537,7 @@ public class real_GUI extends Application {
 
 
 
-            reserve_grid.setHalignment(cancel,HPos.CENTER);
+            GridPane.setHalignment(cancel,HPos.CENTER);
             reserve_grid.add(cancel,75,85);
 
             Scene reserve_scene = new Scene(reserve_grid, 960, 600);
