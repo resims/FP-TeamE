@@ -46,6 +46,6 @@ class SQLUserProcessor {
         return  SQLProcessor.generateQueryResultSet(SQLGenerator.check_due_dates(Username));
     }
     static boolean removeUser(String userId){
-        return SQLProcessor.executeSQL(SQLGenerator.removeUser());
+        return SQLProcessor.executeSQL(SQLGenerator.removeUser(userId));
     }
 }
