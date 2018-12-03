@@ -49,7 +49,7 @@ class SQLBookProcessor{
             return true;
         }else{return false;}
     }
-    static boolean update_due_date(String newDueDate){
-        return SQLProcessor.executeSQL(SQLGenerator.update_due_date("1","1",newDueDate));
+    static boolean update_due_date(int user_id,int book_id, String newDueDate){
+        return SQLProcessor.executeSQL(SQLGenerator.update_due_date(user_id,book_id,newDueDate));
     }
 }

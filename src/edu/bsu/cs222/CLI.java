@@ -36,6 +36,8 @@ public class CLI {
         System.out.println(SQLProcessor.parseasList(SQLBookProcessor.advancedSearch("Author","e",-1)));
         System.out.print("Checking due date");
         System.out.print(SQLProcessor.parseasString(SQLUserProcessor.check_due_dates()));
+        SQLBookProcessor.update_due_date(1,1,"2012-12-54 22:50");
+        SQLBookProcessor.update_due_date(2,2,"2013-12-54 22:50");
 }
 
     private static void deanMode() {

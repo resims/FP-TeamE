@@ -16,7 +16,7 @@ class PasswordHash {
 
         //adds the salt key to user's password and hashes it
         String hashedPassword = createHashedPassword(passwordInput);
-        return SQLUserProcessor.addUser(usernameInput,hashedPassword,"Patron");
+        return SQLUserProcessor.addUser(usernameInput,hashedPassword,typeInput);
     }
 
     //allow user to input information on GUI
