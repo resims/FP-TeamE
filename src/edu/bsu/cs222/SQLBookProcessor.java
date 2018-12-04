@@ -52,4 +52,12 @@ class SQLBookProcessor{
     static boolean update_due_date(int user_id,int book_id, String newDueDate){
         return SQLProcessor.executeSQL(SQLGenerator.update_due_date(user_id,book_id,newDueDate));
     }
+    static ResultSet show_overdue_items(){
+        return SQLProcessor.generateQueryResultSet(SQLGenerator.overdue());
+    }
+
+    public static boolean reserve_book(String text) {
+        String t=text;
+        return true;
+    }
 }

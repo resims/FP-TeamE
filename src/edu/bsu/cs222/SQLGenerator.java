@@ -41,4 +41,12 @@ class SQLGenerator {
     public static String removeUser(int user_id) {
         return "DELETE FROM `users` WHERE `users`.`ID` = "+user_id;
     }
+
+    public static String changeUserType(int userID, String type) {
+        return "Update users set Type= "+type+" where ID="+userID;
+    }
+
+    public static String overdue() {
+        return "SELECT * FROM `circulation` where (CURRENT_TIMESTAMP>due_date and checkin_date is null) or checkin_date>due_date";
+    }
 }

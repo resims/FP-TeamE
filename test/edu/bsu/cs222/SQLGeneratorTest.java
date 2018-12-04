@@ -40,11 +40,41 @@ public class SQLGeneratorTest {
 
     @Test
     public void addUser() {
-        Assert.assertEquals(SQLGenerator.addUser("username","password","type"),"Insert into Users (Username,Password, Type) values (username,password,type);");
+        Assert.assertEquals(SQLGenerator.addUser("username","password","type"),"Insert into Users (Username,Password, Type) values ('username','password','type');");
     }
 
     @Test
     public void getPassword() {
         Assert.assertEquals(SQLGenerator.getPassword("resims"),"select Password from Users where Username='resims';");
+    }
+    @Test
+
+    public void getUserType() {
+         Assert.assertEquals(SQLGenerator.getUserType("username"),"select Type from users where username='username';");
+    }
+    @Test
+
+    public void check_due_dates(){
+        Assert.assertEquals(SQLGenerator.check_due_dates("Username"),"select books.Title, books.barcode_number, rs1.due_date from books join (select * from circulation join users on circulation.user_id=users.ID where users.Username='Username' and circulation.checkin_date is null) as rs1 on rs1.book_id=books.barcode_number");
+    }
+    @Test
+
+    public void update_due_date() {
+        Assert.assertEquals(SQLGenerator.update_due_date(1,2,"12-1-2019"),"UPDATE `circulation` SET `due_date` = '12-1-2019' WHERE user_id="+1+" and book_id="+2+" and checkin_date is null limit 1;");
+    }
+    @Test
+
+    public void removeUser() {
+         Assert.assertEquals(SQLGenerator.removeUser(3),"DELETE FROM `users` WHERE `users`.`ID` = "+3);
+    }
+    @Test
+
+    public void changeUserType() {
+         Assert.assertEquals(SQLGenerator.changeUserType(5,"Dean"),"Update users set Type= "+"Dean"+" where ID="+5);
+    }
+    @Test
+
+    public void overdue() {
+         Assert.assertEquals(SQLGenerator.overdue(),"SELECT * FROM `circulation` where (CURRENT_TIMESTAMP>due_date and checkin_date is null) or checkin_date>due_date");
     }
 }

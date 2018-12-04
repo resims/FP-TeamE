@@ -8,6 +8,7 @@ public class PasswordHashTest {
     @Test
     public void signup() {
         Assert.assertEquals(PasswordHash.userSignup("adam", "isTestingThis", "Librarian"), true);
+
     }
 
     @Test

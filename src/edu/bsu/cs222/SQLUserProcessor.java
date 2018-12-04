@@ -48,4 +48,7 @@ class SQLUserProcessor {
     static boolean removeUser(int userId){
         return SQLProcessor.executeSQL(SQLGenerator.removeUser(userId));
     }
+    static boolean changeUserType(int userID, String type){
+        return SQLProcessor.executeSQL(SQLGenerator.changeUserType(userID,type));
+    }
 }
