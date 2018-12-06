@@ -479,7 +479,7 @@ public class real_GUI extends Application {
 
             Button reserve_book = new Button("Reserve");
             reserve_book.setOnAction(e2 ->{
-                boolean check =SQLBookProcessor.reserve_book(book_to_reserve.getText());  // change this to an SQL processor statement to add functionality to this button
+                boolean check =SQLBookProcessor.reserve_book(Integer.parseInt(book_to_reserve.getText()));  // change this to an SQL processor statement to add functionality to this button
                 //noinspection ConstantConditions
                 if (check){ //suppressed warning due to check always being false, needed for future development
                     Stage popup_Stage = new Stage();
