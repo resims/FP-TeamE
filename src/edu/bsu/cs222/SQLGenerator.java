@@ -65,4 +65,10 @@ class SQLGenerator {
     public static String userExists(int userID) {
         return "SELECT count(id) FROM users Where id="+userID;
     }
+    static String getDamage(int barcode_number){
+        return "SELECT damage FROM books Where barcode_number="+barcode_number+";";
+    }
+    static String editDamage(int barcode_number, String damageNotes){
+        return ("update books set Damage= " + damageNotes + " Where barcode_number="+barcode_number+";");
+    }
 }

@@ -88,5 +88,15 @@ class SQLBookProcessor {
         }
         return false;
     }
-
+    static String getDamage(int barcode_number){
+        String damageNotes;
+        damageNotes = SQLGenerator.getDamage(barcode_number);
+        if (damageNotes == null) {
+            return "This is no known damage for this item";
+        }
+        else return damageNotes;
+    }
+    static String editDamage(int barcode_number, String damageNotes) {
+        return SQLGenerator.editDamage(barcode_number, damageNotes);
+    }
 }

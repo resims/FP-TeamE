@@ -7,7 +7,7 @@ public class SQLGeneratorTest {
 
     @Test
     public void checkout() {
-        Assert.assertEquals(SQLGenerator.checkout(4,6),"update books set Available=0 where barcode_number='4'; INSERT INTO `circulation`(`user_id`, `book_id`, `due_date`) VALUES (6,'4',DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 14 DAY));");
+        Assert.assertEquals(SQLGenerator.checkout(4,6),"update books set Reservations='', Available=0 where barcode_number='4'; INSERT INTO `circulation`(`user_id`, `book_id`, `due_date`) VALUES (6,'4',DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 14 DAY));");
     }
 
     @Test
