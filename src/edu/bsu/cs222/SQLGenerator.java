@@ -34,35 +34,35 @@ class SQLGenerator {
         return "select books.Title, books.barcode_number, rs1.due_date from books join (select * from circulation join users on circulation.user_id=users.ID where users.Username='"+Username+"' and circulation.checkin_date is null) as rs1 on rs1.book_id=books.barcode_number";
     }
 
-    public static String update_due_date(int user_id, int book_id, String newDueDate) {
+    static String update_due_date(int user_id, int book_id, String newDueDate) {
         return "UPDATE `circulation` SET `due_date` = '"+newDueDate+"' WHERE user_id="+user_id+" and book_id="+book_id+" and checkin_date is null limit 1;";
     }
 
-    public static String removeUser(int user_id) {
+    static String removeUser(int user_id) {
         return "DELETE FROM `users` WHERE `users`.`ID` = "+user_id;
     }
 
-    public static String changeUserType(int userID, String type) {
+    static String changeUserType(int userID, String type) {
         return "Update users set Type= "+type+" where ID="+userID;
     }
 
-    public static String overdue() {
+    static String overdue() {
         return "SELECT * FROM `circulation` where (CURRENT_TIMESTAMP>due_date and checkin_date is null) or checkin_date>due_date";
     }
 
-    public static String reserveBook(String barcode_number) {
+    static String reserveBook(String barcode_number) {
         return "update books set Available=0, Reservations='"+SQLUserProcessor.Username+"' where barcode_number="+barcode_number;
     }
 
-    public static String getReservation(int barcode_number) {
+    static String getReservation(int barcode_number) {
         return "SELECT Reservations FROM books Where barcode_number="+barcode_number+";";
     }
 
-    public static String getUsername(int userID) {
+    static String getUsername(int userID) {
         return "Select username from users where id="+userID+";";
     }
 
-    public static String userExists(int userID) {
+    static String userExists(int userID) {
         return "SELECT count(id) FROM users Where id="+userID;
     }
     static String getDamage(int barcode_number){

@@ -31,7 +31,7 @@ public class printReceipt implements Printable {
         try {
             String cn = UIManager.getSystemLookAndFeelClassName();
             UIManager.setLookAndFeel(cn); // Use the native L&F
-        } catch (Exception cnf) {
+        } catch (Exception ignored) {
         }
         PrinterJob job = PrinterJob.getPrinterJob();
         PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();

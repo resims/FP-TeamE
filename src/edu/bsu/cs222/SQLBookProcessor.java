@@ -4,7 +4,7 @@ package edu.bsu.cs222;
 import java.sql.*;
 import java.sql.SQLException;
 
-
+@SuppressWarnings("unused")
 class SQLBookProcessor {
 
 
@@ -53,7 +53,6 @@ class SQLBookProcessor {
 
         String reserved = getReservation(barcode_number);
         String user = SQLUserProcessor.getUsername(UserID);
-        System.out.println(NumberAvailable + reserved + user);
         if (SQLUserProcessor.userExists(UserID)) {
             if (NumberAvailable != 0 || (NumberAvailable == 0 && reserved.equals(user))) {
                 SQLProcessor.executeSQL(SQLGenerator.checkout(barcode_number, UserID));

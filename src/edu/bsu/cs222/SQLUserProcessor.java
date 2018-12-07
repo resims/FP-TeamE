@@ -3,6 +3,7 @@ package edu.bsu.cs222;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@SuppressWarnings("unused")
 class SQLUserProcessor {
     static String Username="";
     static String getUserType(String username){
@@ -52,7 +53,7 @@ class SQLUserProcessor {
         return SQLProcessor.executeSQL(SQLGenerator.changeUserType(userID,type));
     }
 
-    public static String getUsername(int userID) {
+    static String getUsername(int userID) {
         String username="";
         ResultSet rs=SQLProcessor.generateQueryResultSet(SQLGenerator.getUsername(userID));
         try {
@@ -62,8 +63,6 @@ class SQLUserProcessor {
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
-        System.out.print(username);
-
         return username;
 
     }

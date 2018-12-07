@@ -107,7 +107,7 @@ public class GUI_Library extends Application {
         cancel_2.setOnAction(e ->{PrimaryStage.setScene(this.SecondaryStage.getScene());});
         Librarian_search_grid.add(cancel_2,6,2);
 
-        ChoiceBox<String> search_type2 = new ChoiceBox<String>();
+        ChoiceBox<String> search_type2 = new ChoiceBox<>();
         search_type2.setTooltip(new Tooltip("Search terms type"));
         search_type2.getItems().addAll(title2,barcode2,source_type2,author2,call_number2,isbn2);
 
