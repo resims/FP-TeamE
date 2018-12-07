@@ -3,7 +3,7 @@ package edu.bsu.cs222;
 class SQLGenerator {
     private final static int days=14;
     static String checkout(int barcode_number, int UserID) {
-        return ("update books set Available=0 where barcode_number='" + barcode_number + "'; INSERT INTO `circulation`(`user_id`, `book_id`, `due_date`) VALUES ("+UserID+",'"+barcode_number+"',DATE_ADD(CURRENT_TIMESTAMP, INTERVAL "+days+" DAY));");
+        return ("update books set Reservations='', Available=0 where barcode_number='" + barcode_number + "'; INSERT INTO `circulation`(`user_id`, `book_id`, `due_date`) VALUES ("+UserID+",'"+barcode_number+"',DATE_ADD(CURRENT_TIMESTAMP, INTERVAL "+days+" DAY));");
     }
     static String checkin(int barcode_number){
         return "update books set Available=1 where barcode_number='" + barcode_number + "'; "+"update circulation set checkin_date=CURRENT_TIMESTAMP WHERE book_id='"+barcode_number+"' and checkin_date is null ORDER BY trans_id ASC limit 1;";
@@ -32,5 +32,37 @@ class SQLGenerator {
     }
     static String check_due_dates(String Username){
         return "select books.Title, books.barcode_number, rs1.due_date from books join (select * from circulation join users on circulation.user_id=users.ID where users.Username='"+Username+"' and circulation.checkin_date is null) as rs1 on rs1.book_id=books.barcode_number";
+    }
+
+    public static String update_due_date(int user_id, int book_id, String newDueDate) {
+        return "UPDATE `circulation` SET `due_date` = '"+newDueDate+"' WHERE user_id="+user_id+" and book_id="+book_id+" and checkin_date is null limit 1;";
+    }
+
+    public static String removeUser(int user_id) {
+        return "DELETE FROM `users` WHERE `users`.`ID` = "+user_id;
+    }
+
+    public static String changeUserType(int userID, String type) {
+        return "Update users set Type= "+type+" where ID="+userID;
+    }
+
+    public static String overdue() {
+        return "SELECT * FROM `circulation` where (CURRENT_TIMESTAMP>due_date and checkin_date is null) or checkin_date>due_date";
+    }
+
+    public static String reserveBook(String barcode_number) {
+        return "update books set Available=0, Reservations='"+SQLUserProcessor.Username+"' where barcode_number="+barcode_number;
+    }
+
+    public static String getReservation(int barcode_number) {
+        return "SELECT Reservations FROM books Where barcode_number="+barcode_number+";";
+    }
+
+    public static String getUsername(int userID) {
+        return "Select username from users where id="+userID+";";
+    }
+
+    public static String userExists(int userID) {
+        return "SELECT count(id) FROM users Where id="+userID;
     }
 }

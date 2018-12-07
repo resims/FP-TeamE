@@ -45,4 +45,39 @@ class SQLUserProcessor {
     static ResultSet check_due_dates(){
         return  SQLProcessor.generateQueryResultSet(SQLGenerator.check_due_dates(Username));
     }
-}
+    static boolean removeUser(int userId){
+        return SQLProcessor.executeSQL(SQLGenerator.removeUser(userId));
+    }
+    static boolean changeUserType(int userID, String type){
+        return SQLProcessor.executeSQL(SQLGenerator.changeUserType(userID,type));
+    }
+
+    public static String getUsername(int userID) {
+        String username="";
+        ResultSet rs=SQLProcessor.generateQueryResultSet(SQLGenerator.getUsername(userID));
+        try {
+            if (rs.first()) {
+                username = rs.getString(1);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        System.out.print(username);
+
+        return username;
+
+    }
+    static boolean userExists(int userID){
+        int usercount=0;
+        ResultSet rs=SQLProcessor.generateQueryResultSet(SQLGenerator.userExists(userID));
+        try {
+            if (rs.first()) {
+                usercount = rs.getInt(1);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        return usercount==1;
+
+    }
+    }
