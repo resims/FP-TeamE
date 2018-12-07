@@ -47,7 +47,7 @@ class SQLBookProcessor {
         }
         return reserved;
     }
-
+    @SuppressWarnings("ConstantConditions")
     static boolean checkout(int barcode_number, int UserID) {
         int NumberAvailable = getAvailable(barcode_number);
 
@@ -87,15 +87,20 @@ class SQLBookProcessor {
         }
         return false;
     }
+
     static String getDamage(int barcode_number){
-        String damageNotes;
-        damageNotes = SQLGenerator.getDamage(barcode_number);
-        if (damageNotes == null) {
-            return "This is no known damage for this item";
+        String damageNotes="";
+        ResultSet rs = SQLProcessor.generateQueryResultSet(SQLGenerator.getDamage(barcode_number));
+        try {
+            if (rs.first()) {
+                damageNotes = rs.getString(1);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
         }
-        else return damageNotes;
+        return damageNotes;
     }
-    static String editDamage(int barcode_number, String damageNotes) {
-        return SQLGenerator.editDamage(barcode_number, damageNotes);
+    static boolean editDamage(int barcode_number, String damageNotes) {
+        return SQLProcessor.executeSQL(SQLGenerator.editDamage(barcode_number, damageNotes));
     }
 }
